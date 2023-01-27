@@ -1,2 +1,2 @@
 # ci-projects
-Repo for ci builds
+Repo for building applications
