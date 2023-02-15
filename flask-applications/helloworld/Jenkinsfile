@@ -24,9 +24,11 @@ pipeline {
         }
 
         stage('Build image') { 
-            steps { 
-                script {
-                    app = docker.build("opeomotayo/hello-world")
+            steps {
+                dir('flask-applications/helloworld') {
+                    script {
+                        app = docker.build("opeomotayo/hello-world")
+                    }
                 }
             }
         }
