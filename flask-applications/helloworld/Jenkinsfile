@@ -1,19 +1,26 @@
-node {
-    def app
+def app
+pipeline {
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+
+    agent {
+        kubernetes {
+            // label "-${UUID.randomUUID()}"
+            yamlFile 'dsl/pipelines/build-pod.yaml'
+            defaultContainer 'devops-tools'      
+        }
+    }
 
     stage('Clone repository') {
-      
         checkout scm
     }
 
     stage('Build image') {
-  
        app = docker.build("opeomotayo/hello-world")
     }
 
     stage('Test image') {
-  
-
         app.inside {
             sh 'echo "Tests passed"'
         }
@@ -27,7 +34,7 @@ node {
     }
     
     stage('Trigger ManifestUpdate') {
-                echo "triggering updatemanifestjob"
-                build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
-        }
+        echo "triggering updatemanifestjob"
+        build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
+    }
 }
