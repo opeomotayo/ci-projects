@@ -15,7 +15,7 @@ pipelineJob('hello-world') {
             branches('main')
             }
         }   
-        scriptPath('flask-applications/helloworld/Jenkinsfile')
+        scriptPath('dsl/pipelines/flask-applications/helloworld/Jenkinsfile')
         }  
     }       
 }
@@ -29,7 +29,7 @@ pipelineJob('actions-controller2') {
         scm {
             git {
             remote {
-                github('opeomotayo/cd-projects')
+                github('opeomotayo/ci-projects')
             }
             branches('main')
             }
