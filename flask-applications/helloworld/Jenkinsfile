@@ -2,6 +2,7 @@ def app
 
 pipeline {
     options {
+        skipStagesAfterUnstable()
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
 
@@ -14,32 +15,38 @@ pipeline {
     }
 
     stages {
-
-        stage('Tesing...') {
-            steps {
-                sh "ls -la"
-                sh "pwd"
+         stage('Clone repository') { 
+            steps { 
+                script {
+                    checkout scm
+                }
             }
         }
 
-        stage('Build image') {
-            steps {
-                app = docker.build("opeomotayo/hello-world")
+        stage('Build image') { 
+            steps { 
+                script {
+                    app = docker.build("opeomotayo/hello-world")
+                }
             }
         }
 
         stage('Test image') {
             steps {
-                app.inside {
-                    sh 'echo "Tests passed"'
+                script {
+                    app.inside {
+                        sh 'echo "Tests passed"'
+                    }
                 }
             }
         }
 
         stage('Push image') {
-            steps {        
-                docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-access') {
-                    app.push("${env.BUILD_NUMBER}")
+            steps { 
+                script {       
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-access') {
+                        app.push("${env.BUILD_NUMBER}")
+                    }
                 }
             }
         }
