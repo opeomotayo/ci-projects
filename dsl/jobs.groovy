@@ -19,7 +19,28 @@ pipelineJob('hello-world') {
         }  
     }       
 }
-pipelineJob('actions-controller2') {
+
+pipelineJob('update-manifest') {
+    logRotator {
+        numToKeep(10)
+        daysToKeep(30)
+    }
+    definition {
+        cpsScm {
+        scm {
+            git {
+            remote {
+                github('opeomotayo/ci-projects')
+            }
+            branches('main')
+            }
+        }   
+        scriptPath('dsl/pipelines/flask-applications/helloworld/Jenkinsfile')
+        }  
+    }       
+}
+
+pipelineJob('actions-controller') {
     logRotator {
         numToKeep(10)
         daysToKeep(30)

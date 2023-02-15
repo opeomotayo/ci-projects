@@ -25,7 +25,7 @@ pipeline {
 
         stage('Build image') { 
             steps {
-                dir('flask-applications/helloworld') {
+                dir('dsl/pipelines/flask-applications/helloworld') {
                     script {
                         app = docker.build("opeomotayo/hello-world")
                     }
