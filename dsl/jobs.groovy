@@ -20,7 +20,7 @@ pipelineJob('hello-world') {
     }       
 }
 
-pipelineJob('update-manifest') {
+pipelineJob('update-cd-manifest') {
     logRotator {
         numToKeep(10)
         daysToKeep(30)
@@ -30,12 +30,12 @@ pipelineJob('update-manifest') {
         scm {
             git {
             remote {
-                github('opeomotayo/ci-projects')
+                github('opeomotayo/cd-projects')
             }
             branches('main')
             }
         }   
-        scriptPath('dsl/pipelines/flask-applications/helloworld/Jenkinsfile')
+        scriptPath('technologies/deployment-pipelines/Jenkinsfile')
         }  
     }       
 }
