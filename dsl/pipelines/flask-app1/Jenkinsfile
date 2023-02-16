@@ -8,7 +8,7 @@ pipeline {
 
     agent {
         kubernetes {
-            label "-${UUID.randomUUID()}"
+            // label "-${UUID.randomUUID()}"
             yamlFile 'build-pod.yaml'
             defaultContainer 'devops-tools'      
         }
@@ -56,7 +56,6 @@ pipeline {
         stage('Update ImageTag') {
             steps { 
                 script {  
-                    sh "printenv"
                     echo "triggering the pipeline that updates deployment image tag"
                     build job: 'flask-app1-update-tag', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
                 }
