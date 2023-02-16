@@ -57,7 +57,7 @@ pipeline {
             steps { 
                 script {  
                     echo "triggering the pipeline that updates deployment image tag"
-                    build job: 'flask-app1-update-deployment-image', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
+                    build job: 'flask-app1-update-tag', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
                 }
             }
         }
