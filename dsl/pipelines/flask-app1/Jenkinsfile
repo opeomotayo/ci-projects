@@ -8,9 +8,8 @@ pipeline {
 
     agent {
         kubernetes {
-            // label "-${UUID.randomUUID()}"
             yamlFile 'build-pod.yaml'
-            defaultContainer 'devops-tools'      
+            defaultContainer 'secutity-tools'      
         }
     }
 
