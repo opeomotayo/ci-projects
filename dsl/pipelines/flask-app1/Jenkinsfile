@@ -5,7 +5,6 @@ pipeline {
         skipStagesAfterUnstable()
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
-
     agent {
         kubernetes {
             // label "-${UUID.randomUUID()}"
@@ -52,14 +51,23 @@ pipeline {
                 }
             }
         }
-        
-        stage('Update ImageTag') {
-            steps { 
-                script {  
-                    echo "triggering the pipeline that updates deployment image tag"
-                    build job: 'flask-app1-update-tag', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
-                }
-            }    
+
+        stage('Example') {
+            steps {
+                script {
+                    def dockertag = params + string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")
+                    build job: 'flask-app1-update-tag', parameters: dockertag
+                }    
+            }
         }
+        
+        // stage('Update ImageTag') {
+        //     steps { 
+        //         script {  
+        //             echo "triggering the pipeline that updates deployment image tag"
+        //             build job: 'flask-app1-update-tag', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
+        //         }
+        //     }    
+        // }
     }
 }
