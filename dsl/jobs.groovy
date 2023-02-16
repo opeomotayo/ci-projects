@@ -15,7 +15,7 @@ pipelineJob('flask-app1-build-image') {
             branches('main')
             }
         }   
-        scriptPath('dsl/pipelines/flask-applications/helloworld/Jenkinsfile')
+        scriptPath('dsl/pipelines/flask-app1/Jenkinsfile')
         }  
     }       
 }
