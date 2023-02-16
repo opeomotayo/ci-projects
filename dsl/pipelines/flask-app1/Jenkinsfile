@@ -5,14 +5,14 @@ pipeline {
         skipStagesAfterUnstable()
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
-    agent any
-    // agent {
-    //     kubernetes {
-    //         // label "-${UUID.randomUUID()}"
-    //         yamlFile 'build-pod.yaml'
-    //         defaultContainer 'devops-tools'      
-    //     }
-    // }
+
+    agent {
+        kubernetes {
+            label "-${UUID.randomUUID()}"
+            yamlFile 'build-pod.yaml'
+            defaultContainer 'devops-tools'      
+        }
+    }
 
     stages {
         stage('Clone Repository') { 
