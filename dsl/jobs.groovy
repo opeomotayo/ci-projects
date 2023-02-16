@@ -1,6 +1,6 @@
 // github('opeomotayo/cd-projects') can also be used instead of url('https://github.com/opeomotayo/cd-projects.git')
 // multiple pipelinesJobs can also be set here
-pipelineJob('hello-world') {
+pipelineJob('flask-app1:build-publish-image') {
     logRotator {
         numToKeep(10)
         daysToKeep(30)
@@ -20,7 +20,7 @@ pipelineJob('hello-world') {
     }       
 }
 
-pipelineJob('update-cd-manifest') {
+pipelineJob('flask-app1:update-deployment-image') {
     logRotator {
         numToKeep(10)
         daysToKeep(30)
