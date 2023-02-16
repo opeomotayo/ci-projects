@@ -15,7 +15,7 @@ pipeline {
     agent {
         kubernetes {
             defaultContainer 'maven'
-            yamlFile '''
+            yaml '''
                 apiVersion: v1
                 kind: Pod
                 spec:
