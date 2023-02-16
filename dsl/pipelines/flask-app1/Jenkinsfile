@@ -55,6 +55,7 @@ pipeline {
         stage('Example') {
             steps {
                 script {
+                    sh "printenv"
                     def dockertag = params + string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")
                     build job: 'flask-app1-update-tag', parameters: dockertag
                 }    
