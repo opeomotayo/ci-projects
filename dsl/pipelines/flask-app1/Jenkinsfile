@@ -1,78 +1,63 @@
 def app
 
 pipeline {
-    options {
-        skipStagesAfterUnstable()
-        buildDiscarder(logRotator(numToKeepStr: '5'))
+  options {
+    skipStagesAfterUnstable()
+  }
+  agent {
+    kubernetes {
+      yamlFile 'build-pod.yaml'
+      defaultContainer 'devops-tools'      
+    }
+  }
+
+  stages {
+    stage('Clone Repository') { 
+      steps { 
+        script {
+          checkout scm
+        }
+      }
     }
 
-    // agent {
-    //     kubernetes {
-    //         yamlFile 'build-pod.yaml'
-    //         defaultContainer 'secutity-tools'      
+    stage('Build Image') { 
+      steps {
+        dir('dsl/pipelines/flask-app1') {
+          script {
+              app = docker.build("opeomotayo/flask-app1")
+          }
+        }
+      }
+    }
+
+    // stage('Test Image') {
+    //     steps {
+    //         script {
+    //             app.inside {
+    //                 sh 'echo "Tests passed"'
+    //             }
+    //         }
     //     }
     // }
-    agent {
-        kubernetes {
-            defaultContainer 'maven'
-            yaml '''
-                apiVersion: v1
-                kind: Pod
-                spec:
-                    containers:  
-                        - name: maven
-                        image: maven:3.5.4-jdk-8-slim
-                        command: ["tail", "-f", "/dev/null"]
-                '''
+
+    stage('Push Image') {
+        steps { 
+            script {       
+                docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-access') {
+                    app.push("${env.BUILD_NUMBER}")
+                }
+            }
         }
     }
-
-    stages {
-        stage('Clone Repository') { 
-            steps { 
-                script {
-                    checkout scm
-                }
-            }
+    
+    stage('Update ImageTag') {
+      steps { 
+        script {  
+          sh "printenv"
+          echo "triggering the pipeline that updates deployment image tag"
+          build job: 'flask-app1-update-tag', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
         }
-
-        stage('Build Image') { 
-            steps {
-                dir('dsl/pipelines/flask-app1') {
-                    script {
-                        app = docker.build("opeomotayo/flask-app1")
-                    }
-                }
-            }
-        }
-
-        // stage('Test Image') {
-        //     steps {
-        //         script {
-        //             app.inside {
-        //                 sh 'echo "Tests passed"'
-        //             }
-        //         }
-        //     }
-        // }
-
-        stage('Push Image') {
-            steps { 
-                script {       
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-access') {
-                        app.push("${env.BUILD_NUMBER}")
-                    }
-                }
-            }
-        }
-        
-        stage('Update ImageTag') {
-            steps { 
-                script {  
-                    echo "triggering the pipeline that updates deployment image tag"
-                    build job: 'flask-app1-update-tag', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
-                }
-            }    
-        }
+      }    
     }
+  }
 }
