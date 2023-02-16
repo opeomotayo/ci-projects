@@ -19,11 +19,11 @@ pipeline {
                 apiVersion: v1
                 kind: Pod
                 spec:
-                containers:  
-                    - name: maven
-                    image: maven:3.5.4-jdk-8-slim
-                    command: ["tail", "-f", "/dev/null"]
-            '''
+                    containers:  
+                        - name: maven
+                        image: maven:3.5.4-jdk-8-slim
+                        command: ["tail", "-f", "/dev/null"]
+                '''
         }
     }
 
