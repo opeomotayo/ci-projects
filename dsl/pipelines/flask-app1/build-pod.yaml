@@ -9,9 +9,6 @@ spec:
   - name: devops-tools
     image: opeomotayo/devops-tools:latest
     imagePullPolicy: Always
-    volumeMounts:
-    - name: dockersock
-      mountPath: /var/run/docker.sock
     command:
     - cat
     tty: true
@@ -25,9 +22,6 @@ spec:
   - name: security-tools
     image: opeomotayo/security-tools:latest
     imagePullPolicy: Always
-    volumeMounts:
-    - name: dockersock
-      mountPath: /var/run/docker.sock
     command:
     - cat
     tty: true
