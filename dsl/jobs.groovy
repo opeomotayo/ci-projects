@@ -5,6 +5,9 @@ pipelineJob('flask-app1-build-image') {
         numToKeep(10)
         daysToKeep(30)
     }
+    triggers {
+        githubPush()
+    }
     definition {
         cpsScm {
         scm {
