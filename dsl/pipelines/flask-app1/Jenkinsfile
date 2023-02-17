@@ -1,6 +1,7 @@
 def app
 
 pipeline {
+  
   options {
     skipStagesAfterUnstable()
   }
