@@ -21,6 +21,9 @@ pipelineJob('flask-app1-build-image') {
 }
 
 pipelineJob('flask-app1-update-tag') {
+    triggers {
+        githubPush()
+    }
     logRotator {
         numToKeep(10)
         daysToKeep(30)

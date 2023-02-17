@@ -4,9 +4,6 @@ pipeline {
   options {
     skipStagesAfterUnstable()
   }
-  triggers {
-    githubPush()
-  }
   agent {
     kubernetes {
       yamlFile 'build-pod.yaml'
@@ -47,7 +44,7 @@ pipeline {
         steps { 
             script {       
                 docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-access') {
-                    app.push("${env.BUILD_NUMBER}")
+                  app.push("${env.BUILD_NUMBER}")
                 }
             }
         }
