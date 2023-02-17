@@ -4,6 +4,9 @@ pipeline {
   options {
     skipStagesAfterUnstable()
   }
+  triggers {
+    githubPush()
+  }
   agent {
     kubernetes {
       yamlFile 'build-pod.yaml'
