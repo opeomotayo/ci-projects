@@ -5,6 +5,11 @@ pipeline {
   options {
     skipStagesAfterUnstable()
   }
+
+  tools{
+      jdk 'java-jdk'
+  }
+
   agent {
     kubernetes {
       yamlFile 'build-pod.yaml'
