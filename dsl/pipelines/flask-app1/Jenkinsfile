@@ -35,10 +35,10 @@ pipeline {
     stage('SonarQube Analysis') {
 		steps{
 			script{
-				def scannerHome = tool 'sonarqube-scanner';
+				scannerHome = tool 'sonarqube-scanner';
 			}
 			withSonarQubeEnv('sonarqube-server') {
-					sh "${scannerHome}/bin/sonar-scanner -Dsonar.sources=./dsl/pipelines/flask-app1"
+					sh "${scannerHome}/bin/sonar-scanner" //-Dsonar.sources=./dsl/pipelines/flask-app1
 			}
 		}
 	}
