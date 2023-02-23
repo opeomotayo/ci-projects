@@ -7,6 +7,9 @@ pipeline {
     }
   }
 
+  environment {
+    scannerHome = tool 'sonarqube-scanner'
+  }
   options {
     skipStagesAfterUnstable()
     buildDiscarder(logRotator(numToKeepStr: '5'))
@@ -30,9 +33,14 @@ pipeline {
   stages {
     stage('Scan') {
       steps {
-        withSonarQubeEnv(installationName: 'sonarqube-server') { 
-          sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+        steps {
+        withSonarQubeEnv('sonarqube-server') {
+          sh "${scannerHome}/bin/sonar-scanner"
         }
+        timeout(time: 10, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
+    }
       }
     }
   }
