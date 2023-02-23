@@ -31,15 +31,17 @@ pipeline {
       }
     }
 
-    // stage('Test Image') {
-    //     steps {
-    //         script {
-    //             app.inside {
-    //                 sh 'echo "Tests passed"'
-    //             }
-    //         }
-    //     }
-    // }
+
+    stage('SonarQube Analysis') {
+		steps{
+			script{
+				def scannerHome = tool 'sonarqube-server';
+			}
+			withSonarQubeEnv('My SonarQube Server') {
+					sh "${scannerHome}/bin/sonar-scanner -Dsonar.sources=."
+			}
+		}
+	}
 
     stage('Push Image') {
         steps { 

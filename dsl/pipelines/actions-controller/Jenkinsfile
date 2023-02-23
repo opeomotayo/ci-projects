@@ -3,27 +3,27 @@
 // 	credentialsId: 'vbpFrcGitHubApp'])
 
 def config = [
-    repoName: 'actions-runner-controller',
-    version: '0.22.0',
-    namespace: 'actions-runner-controller',
-    releaseName: 'actions-runner-controller'
+  repoName: 'actions-runner-controller',
+  version: '0.22.0',
+  namespace: 'actions-runner-controller',
+  releaseName: 'actions-runner-controller'
 ]
 
 pipeline {
-    options {
-        // imestamps()
-        // ansiColor('xterm')
-        // timeout(time: 30, unit: 'MINUTES')t
-        // disableConcurrentBuilds()
-        buildDiscarder(logRotator(numToKeepStr: '100'))
+  options {
+      // imestamps()
+      // ansiColor('xterm')
+      // timeout(time: 30, unit: 'MINUTES')t
+      // disableConcurrentBuilds()
+      buildDiscarder(logRotator(numToKeepStr: '100'))
     }
     
     agent {
-        kubernetes {
-            // label "-${UUID.randomUUID()}"
-            yamlFile 'build-pod.yaml'
-            defaultContainer 'devops-tools'      
-        }
+      kubernetes {
+        // label "-${UUID.randomUUID()}"
+        yamlFile 'build-pod.yaml'
+        defaultContainer 'devops-tools'      
+      }
     }
 
     // environment {
@@ -33,14 +33,14 @@ pipeline {
     // }
 
     stages {
-        stage('Add ARC Repo') {
-            steps {
-                sh "ls -la"
-                sh "pwd"
-                // sh "helm repo add ${config.repoName} https://actions-runner-controller.github.io/actions-runner-controller"
-                // sh "helm pull --version ${config.version} --untar ${config.repoName}/actions-runner-controller"
-            }
+      stage('Add ARC Repo') {
+        steps {
+          sh "ls -la"
+          sh "pwd"
+          // sh "helm repo add ${config.repoName} https://actions-runner-controller.github.io/actions-runner-controller"
+          // sh "helm pull --version ${config.version} --untar ${config.repoName}/actions-runner-controller"
         }
+      }
 
         // stage('gcloud login') {
         //     steps {
