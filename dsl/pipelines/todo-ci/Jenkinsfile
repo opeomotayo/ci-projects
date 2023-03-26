@@ -14,6 +14,10 @@ pipeline {
     }
   }
 
+  parameters {
+    string(defaultValue: "123", description: 'This is a parameter', name: 'PARAMETER01')
+  }
+
   stages {
     stage('Clone Repository') { 
       steps { 
@@ -64,7 +68,12 @@ pipeline {
           // build job: 'todo-cd', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
           // build job: 'todo-cd', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]    
           // build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: DOCKERTAG]]
-          def job = build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: 'DOCKERTAG']]
+          // def job = build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: 'DOCKERTAG']]
+         build job: 'ANOTHER_JOB_NAME', wait: false, parameters: [string(name: 'HELLO', value: String.valueOf(PARAMETER01))]
+
+          // paramAValue = "paramAValue"
+          // paramBValue = "paramBValue"
+          // build job: 'downstream-freestyle', parameters: [[$class: 'StringParameterValue', name: 'ParamA', value: paramAValue], [$class: 'StringParameterValue', name: 'ParamB', value: paramBValue]]
 
         }
       }    
