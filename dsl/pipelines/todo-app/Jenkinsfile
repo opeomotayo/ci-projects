@@ -25,9 +25,9 @@ pipeline {
 
     stage('Build Image') { 
       steps {
-        dir('dsl/pipelines/flask-app1') {
+        dir('dsl/pipelines/tod-ci') {
           script {
-            app = docker.build("opeomotayo/flask-app1")
+            app = docker.build("opeomotayo/todo-ci")
           }
         }
       }
@@ -39,7 +39,7 @@ pipeline {
     //             scannerHome = tool 'sonarqube-scanner';
     //         }
     //         withSonarQubeEnv('sonarqube-server') {
-    //           sh "${scannerHome}/bin/sonar-scanner" //-Dsonar.sources=./dsl/pipelines/flask-app1
+    //           sh "${scannerHome}/bin/sonar-scanner"
     //         }
     //     }
     // }
@@ -59,7 +59,7 @@ pipeline {
         script {  
           sh "printenv"
           echo "triggering the pipeline that updates deployment image tag"
-          build job: 'flask-app1-update-tag', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
+          build job: 'todo-cd-update-tag', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
         }
       }    
     }
