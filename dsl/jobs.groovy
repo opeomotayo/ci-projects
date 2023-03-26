@@ -104,7 +104,7 @@ pipelineJob('todo-ci') {
           branches('main')
         }
       }   
-      scriptPath('dsl/pipelines/todo-app/Jenkinsfile')
+      scriptPath('dsl/pipelines/todo-ci/Jenkinsfile')
     }  
   }       
 }
