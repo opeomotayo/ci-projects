@@ -3,7 +3,7 @@
 pipeline {
 
   def app
-  def DOCKERTAG
+  def DOCKERTAG = "${env.BUILD_NUMBER}"
   options {
     skipStagesAfterUnstable()
     buildDiscarder(logRotator(numToKeepStr: '3'))
@@ -65,7 +65,7 @@ pipeline {
           echo "triggering the pipeline that updates deployment image tag"
           // build job: 'todo-cd', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
           // build job: 'todo-cd', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
-          def DOCKERTAG = "${env.BUILD_NUMBER}"
+          
           build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: DOCKERTAG]]
         }
       }    
