@@ -65,7 +65,6 @@ pipeline {
           // build job: 'todo-cd', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]    
           // build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: DOCKERTAG]]
           def job = build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: 'DOCKERTAG']]
-          echo ${job}
 
         }
       }    
