@@ -108,3 +108,22 @@ pipelineJob('todo-ci') {
     }  
   }       
 }
+pipelineJob('todo-cd') {
+  logRotator {
+    numToKeep(10)
+    daysToKeep(30)
+  }
+  definition {
+    cpsScm {
+      scm {
+        git {
+          remote {
+              github('opeomotayo/cd-projects')
+          }
+          branches('main')
+        }
+      }   
+      scriptPath('technologies/deployment-pipelines/todo-cd')
+    }  
+  }       
+}
