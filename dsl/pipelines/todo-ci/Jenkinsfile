@@ -25,7 +25,7 @@ pipeline {
 
     stage('Build Image') { 
       steps {
-        dir('dsl/pipelines/tod-app') {
+        dir('dsl/pipelines/todo-ci') {
           script {
             app = docker.build("opeomotayo/todo-app")
           }
@@ -59,7 +59,7 @@ pipeline {
         script {  
           sh "printenv"
           echo "triggering the pipeline that updates deployment image tag"
-          build job: 'todo-app-update-tag', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
+          build job: 'todo-cd', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
         }
       }    
     }
