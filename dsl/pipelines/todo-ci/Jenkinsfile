@@ -1,7 +1,9 @@
-def app
+
 
 pipeline {
 
+  def app
+  def DOCKERTAG
   options {
     skipStagesAfterUnstable()
     buildDiscarder(logRotator(numToKeepStr: '3'))
@@ -46,9 +48,11 @@ pipeline {
 
     stage('Push Image') {
         steps { 
-            script {       
-                docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-access') {
-                  app.push("${env.BUILD_NUMBER}")
+            script {  
+                if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {     
+                  docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-access') {
+                    app.push("${env.BUILD_NUMBER}")
+                  }
                 }
             }
         }
