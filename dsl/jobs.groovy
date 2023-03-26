@@ -123,7 +123,7 @@ pipelineJob('todo-cd') {
           branches('main')
         }
       }   
-      scriptPath('technologies/deployment-pipelines/todo-cd')
+      scriptPath('technologies/deployment-pipelines/todo-cd/Jenkinsfile')
     }  
   }       
 }
