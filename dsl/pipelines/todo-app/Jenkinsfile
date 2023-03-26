@@ -1,0 +1,126 @@
+def app
+
+pipeline {
+
+  options {
+    skipStagesAfterUnstable()
+    buildDiscarder(logRotator(numToKeepStr: '3'))
+  }
+
+  agent {
+    kubernetes {
+      yamlFile 'build-pod.yaml'
+      defaultContainer 'devops-tools'      
+    }
+  }
+
+  stages {
+    stage('Clone Repository') { 
+      steps { 
+        script {
+          checkout scm
+        }
+      }
+    }
+
+    stage('Build Image') { 
+      steps {
+        dir('dsl/pipelines/flask-app1') {
+          script {
+            app = docker.build("opeomotayo/flask-app1")
+          }
+        }
+      }
+    }
+
+    // stage('SonarQube Analysis') {
+    //     steps{
+    //         script{
+    //             scannerHome = tool 'sonarqube-scanner';
+    //         }
+    //         withSonarQubeEnv('sonarqube-server') {
+    //           sh "${scannerHome}/bin/sonar-scanner" //-Dsonar.sources=./dsl/pipelines/flask-app1
+    //         }
+    //     }
+    // }
+
+    stage('Push Image') {
+        steps { 
+            script {       
+                docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-access') {
+                  app.push("${env.BUILD_NUMBER}")
+                }
+            }
+        }
+    }
+    
+    stage('Update ImageTag') {
+      steps { 
+        script {  
+          sh "printenv"
+          echo "triggering the pipeline that updates deployment image tag"
+          build job: 'flask-app1-update-tag', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
+        }
+      }    
+    }
+  }
+}
+
+
+// pipeline {
+
+// environment {
+//   APP_NAME = "blog-ci"
+//   REPO_NAME = "opeomotayo"
+//   IMAGE_TAG = "${env.BUILD_NUMBER}"
+//   DOCKER_CRED = "dockerhub"
+// }
+
+// options {
+//     buildDiscarder(logRotator(numToKeepStr: '3'))
+//   }
+
+// agent {
+//   kubernetes {
+//     label 'ci-pipeline'
+//     defaultContainer 'docker'
+//     yamlFile 'build-pod.yaml'
+//   }
+// }
+
+// stages {
+//   stage('Build Image') {
+//     steps {
+//       script {
+//           dir("jenkins-pipelines/blog-ci"){
+//               app = docker.build("${REPO_NAME}/${APP_NAME}:${IMAGE_TAG}") 
+//           }
+//       }
+//     }
+//   }
+//   stage('Test') {
+//     steps {
+//       script {
+//           sh 'echo "Tests passed"'
+//       }  
+//     }
+//   }
+//   stage('Push Image') {
+//     steps {
+//       script {
+//           docker.withRegistry("https://registry.hub.docker.com", "${DOCKER_CRED}") {
+//               app.push("${IMAGE_TAG}")
+//           }
+//       }
+//     }
+//   }
+//   stage('Trigger Manifest Update') {
+//     steps {
+//           script {
+//               echo "Updating manifest"
+//               build job: 'blog-manifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
+//           }
+//       }
+//     }
+//   }
+// }

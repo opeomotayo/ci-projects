@@ -85,3 +85,26 @@ pipelineJob('actions-controller') {
     }  
   }       
 }
+
+pipelineJob('todo-ci') {
+  logRotator {
+    numToKeep(10)
+    daysToKeep(30)
+  }
+  triggers {
+    githubPush()
+  }
+  definition {
+    cpsScm {
+      scm {
+        git {
+          remote {
+            github('opeomotayo/ci-projects')
+          }
+          branches('main')
+        }
+      }   
+      scriptPath('dsl/pipelines/todo-app/Jenkinsfile')
+    }  
+  }       
+}
