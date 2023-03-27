@@ -59,82 +59,18 @@ pipeline {
         }
     }
     
-    stage('Update ImageTag') {
+    stage('Trigger todo-cd') {
       steps { 
         script {  
           sh "printenv"
           echo "triggering the pipeline that updates deployment image tag"
-          // build job: 'todo-cd', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
-          // build job: 'todo-cd', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]    
-          // build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: DOCKERTAG]]
-          def job = build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'HELLO', value: "${env.BUILD_NUMBER}"]]
-        //  build job: 'todo-cd', wait: false, parameters: [string(name: 'HELLO', value: "${env.BUILD_NUMBER}")]
-
           // paramAValue = "paramAValue"
           // paramBValue = "paramBValue"
+          //  build job: 'todo-cd', wait: false, parameters: [string(name: 'HELLO', value: "${env.BUILD_NUMBER}")]
           // build job: 'downstream-freestyle', parameters: [[$class: 'StringParameterValue', name: 'ParamA', value: paramAValue], [$class: 'StringParameterValue', name: 'ParamB', value: paramBValue]]
-
+          def job = build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}"]]
         }
       }    
     }
   }
 }
-
-
-// pipeline {
-
-// environment {
-//   APP_NAME = "blog-ci"
-//   REPO_NAME = "opeomotayo"
-//   IMAGE_TAG = "${env.BUILD_NUMBER}"
-//   DOCKER_CRED = "dockerhub"
-// }
-
-// options {
-//     buildDiscarder(logRotator(numToKeepStr: '3'))
-//   }
-
-// agent {
-//   kubernetes {
-//     label 'ci-pipeline'
-//     defaultContainer 'docker'
-//     yamlFile 'build-pod.yaml'
-//   }
-// }
-
-// stages {
-//   stage('Build Image') {
-//     steps {
-//       script {
-//           dir("jenkins-pipelines/blog-ci"){
-//               app = docker.build("${REPO_NAME}/${APP_NAME}:${IMAGE_TAG}") 
-//           }
-//       }
-//     }
-//   }
-//   stage('Test') {
-//     steps {
-//       script {
-//           sh 'echo "Tests passed"'
-//       }  
-//     }
-//   }
-//   stage('Push Image') {
-//     steps {
-//       script {
-//           docker.withRegistry("https://registry.hub.docker.com", "${DOCKER_CRED}") {
-//               app.push("${IMAGE_TAG}")
-//           }
-//       }
-//     }
-//   }
-//   stage('Trigger Manifest Update') {
-//     steps {
-//           script {
-//               echo "Updating manifest"
-//               build job: 'blog-manifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
-//           }
-//       }
-//     }
-//   }
-// }
