@@ -1,5 +1,4 @@
-  def app
-  def DOCKERTAG = "${env.BUILD_NUMBER}"
+def app
 
 pipeline {
   options {
@@ -68,8 +67,8 @@ pipeline {
           // build job: 'todo-cd', parameters: [string(name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}")]
           // build job: 'todo-cd', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]    
           // build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: DOCKERTAG]]
-          // def job = build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: 'DOCKERTAG']]
-         build job: 'todo-cd', wait: false, parameters: [string(name: 'HELLO', value: "${env.BUILD_NUMBER}")]
+          def job = build job: 'todo-cd', parameters: [[$class: 'StringParameterValue', name: 'HELLO', value: "${env.BUILD_NUMBER}"]]
+        //  build job: 'todo-cd', wait: false, parameters: [string(name: 'HELLO', value: "${env.BUILD_NUMBER}")]
 
           // paramAValue = "paramAValue"
           // paramBValue = "paramBValue"
