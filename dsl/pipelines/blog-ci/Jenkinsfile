@@ -1,0 +1,72 @@
+def app
+
+pipeline {
+  options {
+    skipStagesAfterUnstable()
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
+
+  agent {
+    kubernetes {
+      yamlFile 'build-pod.yaml'
+      defaultContainer 'devops-tools'      
+    }
+  }
+
+  stages {
+    stage('Clone Repository') { 
+      steps { 
+        script {
+          checkout scm
+        }
+      }
+    }
+
+    stage('Build Image') { 
+      steps {
+        dir('dsl/pipelines/blog-ci') {
+          script {
+            app = docker.build("opeomotayo/blog-app")
+          }
+        }
+      }
+    }
+
+    // stage('SonarQube Analysis') {
+    //     steps{
+    //         script{
+    //             scannerHome = tool 'sonarqube-scanner';
+    //         }
+    //         withSonarQubeEnv('sonarqube-server') {
+    //           sh "${scannerHome}/bin/sonar-scanner"
+    //         }
+    //     }
+    // }
+
+    stage('Push Image') {
+        steps { 
+            script {  
+                if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {     
+                  docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-access') {
+                    app.push("${env.BUILD_NUMBER}")
+                  }
+                }
+            }
+        }
+    }
+    
+    stage('Trigger blog-cd') {
+      steps { 
+        script {  
+          sh "printenv"
+          echo "triggering the pipeline that updates deployment image tag"
+          // paramAValue = "paramAValue"
+          // paramBValue = "paramBValue"
+          //  build job: 'blog-cd', wait: false, parameters: [string(name: 'HELLO', value: "${env.BUILD_NUMBER}")]
+          // build job: 'downstream-freestyle', parameters: [[$class: 'StringParameterValue', name: 'ParamA', value: paramAValue], [$class: 'StringParameterValue', name: 'ParamB', value: paramBValue]]
+          def job = build job: 'blog-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}"]]
+        }
+      }    
+    }
+  }
+}
