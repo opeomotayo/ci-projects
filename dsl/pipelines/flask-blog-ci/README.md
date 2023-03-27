@@ -17,7 +17,7 @@ MySQL database instance is listening on port `3306` (default) and initialized by
 ```bash
 chmod +x scripts/deploy.sh
 ./scripts/deploy.sh \
-    --network <network>
+    # --network <network>
     --mysql <image_name>
     --password <mysql_root_password>
     --flask <image_name>
