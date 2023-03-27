@@ -6,7 +6,6 @@ ENV FLASK_RUN_HOST=0.0.0.0
 
 RUN mkdir -pv app
 
-# COPY app/ app/
 COPY . app/
 
 COPY pyproject.toml .
