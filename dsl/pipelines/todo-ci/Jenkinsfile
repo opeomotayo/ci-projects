@@ -13,10 +13,6 @@ pipeline {
     }
   }
 
-  parameters {
-    string(defaultValue: "123", description: 'This is a parameter', name: 'PARAMETER01')
-  }
-
   stages {
     stage('Clone Repository') { 
       steps { 
