@@ -3,7 +3,7 @@ def app
 pipeline {
   options {
     skipStagesAfterUnstable()
-    buildDiscarder(logRotator(numToKeepStr: '3'))
+    buildDiscarder(logRotator(numToKeepStr: '5'))
   }
 
   agent {
