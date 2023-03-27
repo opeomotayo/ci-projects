@@ -23,7 +23,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: flask-app
-        image: blog:v1.0.0
+        image: opeomotayo/flask-blog:latest
         # https://iximiuz.com/en/posts/kubernetes-kind-load-docker-image/
         imagePullPolicy: Never
         resources:
