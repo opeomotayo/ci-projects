@@ -14,7 +14,7 @@ pipeline {
   }
 
   stages {
-    stage('Clone Repository') { 
+    stage('Clone Blog Repository') { 
       steps { 
         script {
           checkout scm
@@ -22,7 +22,7 @@ pipeline {
       }
     }
 
-    stage('Build App Image') { 
+    stage('Build Blog Image') { 
       steps {
         dir('dsl/pipelines/html-blog-ci') {
           script {
@@ -43,20 +43,19 @@ pipeline {
     //     }
     // }
 
-    stage('Push App and DB Images') {
+    stage('Push Blog Image') {
         steps { 
             script {  
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {     
                   docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-access') {
                     app.push("${env.BUILD_NUMBER}")
-                    db.push("${env.BUILD_NUMBER}")
                   }
                 }
             }
         }
     }
     
-    stage('Trigger html-blog-cd') {
+    stage('Trigger html-blog-cd Job') {
       steps { 
         script {  
           sh "printenv"
