@@ -170,44 +170,44 @@ pipelineJob('flask-blog-cd') {
   }       
 }
 
-// pipelineJob('blog-ci') {
-//   logRotator {
-//     numToKeep(10)
-//     daysToKeep(30)
-//   }
-//   triggers {
-//     githubPush()
-//   }
-//   definition {
-//     cpsScm {
-//       scm {
-//         git {
-//           remote {
-//             github('opeomotayo/ci-projects')
-//           }
-//           branches('main')
-//         }
-//       }   
-//       scriptPath('dsl/pipelines/blog-ci/Jenkinsfile')
-//     }  
-//   }       
-// }
-// pipelineJob('blog-cd') {
-//   logRotator {
-//     numToKeep(10)
-//     daysToKeep(30)
-//   }
-//   definition {
-//     cpsScm {
-//       scm {
-//         git {
-//           remote {
-//               github('opeomotayo/cd-projects')
-//           }
-//           branches('main')
-//         }
-//       }   
-//       scriptPath('technologies/deployment-pipelines/blog-cd/Jenkinsfile')
-//     }  
-//   }       
-// }
+pipelineJob('html-blog-ci') {
+  logRotator {
+    numToKeep(10)
+    daysToKeep(30)
+  }
+  triggers {
+    githubPush()
+  }
+  definition {
+    cpsScm {
+      scm {
+        git {
+          remote {
+            github('opeomotayo/ci-projects')
+          }
+          branches('main')
+        }
+      }   
+      scriptPath('dsl/pipelines/html-blog-ci/Jenkinsfile')
+    }  
+  }       
+}
+pipelineJob('html-blog-cd') {
+  logRotator {
+    numToKeep(10)
+    daysToKeep(30)
+  }
+  definition {
+    cpsScm {
+      scm {
+        git {
+          remote {
+              github('opeomotayo/cd-projects')
+          }
+          branches('main')
+        }
+      }   
+      scriptPath('technologies/deployment-pipelines/html-blog-cd/Jenkinsfile')
+    }  
+  }       
+}
