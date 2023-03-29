@@ -4,7 +4,7 @@
 title: "Don't mock Databases, just run them with Docker"
 subtitle: "How to use Docker Compose to make unit testing easier"
 summary: "Use Docker Compose to create on-demand databases within your local & build environments"
-authors: ["Benjamin Cane"]
+authors: ["Ope Omotayo"]
 tags: ["docker", "golang", "continuous integration", "ci/cd"]
 categories: ["Software Engineering"]
 date: 2020-06-15T00:20:53-07:00

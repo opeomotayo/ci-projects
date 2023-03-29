@@ -1,6 +1,6 @@
 ---
 authors:
-- Benjamin Cane
+- Ope Omotayo
 categories:
 - Linux
 date: '2014-04-01T08:55:00'

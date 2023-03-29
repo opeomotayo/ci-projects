@@ -1,5 +1,5 @@
 baseURL: 'https://bencane.com/'
-title: Benjamin Cane
+title: Ope Omotayo
 paginate: 5
 theme: hugo-PaperMod
 enableRobotsTXT: true
@@ -7,21 +7,21 @@ googleAnalytics: UA-3378969-11
 
 params:
   description: 'Distributed Systems and Software Engineer'
-  author: Benjamin Cane
+  author: Ope Omotayo
   ShowReadingTime: true
   defaultTheme: auto
   ShowShareButtons: true
   profileMode:
     enabled: false
     imageUrl: 'img/bcane-train.jpg'
-    imageTitle: Benjamin Cane
+    imageTitle: Ope Omotayo
     buttons:
       - name: Archives
         url: post
 
   homeInfoParams:
     Title: "Hi \U0001F44B"
-    Content: "My name is Benjamin Cane, and you've landed on my engineering blog. I have a background in distributed systems operations, architecture, and development. You will find articles about all sorts of topics like Docker, Linux, Go, Python, and lots more. I hope you enjoy the blog."
+    Content: "My name is Ope Omotayo, and you've landed on my engineering blog. I have a background in distributed systems operations, architecture, and development. You will find articles about all sorts of topics like Docker, Linux, Go, Python, and lots more. I hope you enjoy the blog."
 
   socialIcons:
     - name: twitter

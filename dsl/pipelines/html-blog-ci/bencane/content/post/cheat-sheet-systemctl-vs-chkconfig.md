@@ -1,6 +1,6 @@
 ---
 authors:
-- Benjamin Cane
+- Ope Omotayo
 categories:
 - Cheat Sheets
 - Linux

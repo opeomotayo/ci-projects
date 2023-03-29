@@ -1,7 +1,7 @@
 ## Dockerfile that generates an instance of http://bencane.com
 
 FROM nginx:stable
-MAINTAINER Benjamin Cane <ben@bencane.com>
+MAINTAINER Ope Omotayo <ben@bencane.com>
 
 ## NGINX custom config
 RUN mkdir -p /etc/nginx/globals && rm -vf /etc/nginx/sites-enabled/*

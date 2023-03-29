@@ -5,7 +5,7 @@ date: 2021-02-15T00:01:00-07:00
 draft: false
 subtitle: "Learn how to use Go's interfaces by creating a mock."
 summary: "This article covers Go interfaces' basics and how you can use them to create modular and testable code."
-authors: ["Benjamin Cane"]
+authors: ["Ope Omotayo"]
 tags: ["golang",]
 categories: ["Software Engineering"]
 featured: true

@@ -5,7 +5,7 @@ date: 2020-12-29T00:01:00-07:00
 draft: false
 subtitle: "A detailed example of a Go project structure, specifically for command-line tools."
 summary: "Best practices around structuring Go command-line applications where packages go, parse command-line arguments, and optimize for testing."
-authors: ["Benjamin Cane"]
+authors: ["Ope Omotayo"]
 tags: ["golang",]
 categories: ["Software Engineering"]
 featured: true

@@ -4,7 +4,7 @@ date: 2021-08-08T00:40:06-07:00
 draft: false
 subtitle: "Using a Golang HTTP Multiplexer to create HTTP middleware."
 summary: "Learn how to use the httprouter Go mux to route your custom handlers HTTP requests and create common functions for all handlers, even those pesky ones like PProf."
-authors: ["Benjamin Cane"]
+authors: ["Ope Omotayo"]
 tags: ["golang",]
 categories: ["Software Engineering"]
 featured: true

@@ -1,18 +1,18 @@
 <html>
 <head>
-    <title>Benjamin Cane</title>
+    <title>Ope Omotayo</title>
     <meta name="description" content="Distributed Systems and Software Engineer">
     <meta property="twitter:card" content="summary_large_image">
   
     <meta property="twitter:site" content="@madflojo">
     <meta property="twitter:creator" content="@madflojo">
   
-    <meta property="og:site_name" content="Benjamin Cane">
+    <meta property="og:site_name" content="Ope Omotayo">
     <meta property="og:url" content="https://bencane.com">
-    <meta property="og:title" content="Benjamin Cane">
+    <meta property="og:title" content="Ope Omotayo">
     <meta name="image" property="og:image" content="https://bencane.com/img/bcane-train.jpg">
     <meta property="twitter:image" content="https://bencane.com/img/bcane-train.jpg">
-    <meta property="og:description" content="Distributed Systems and Software Engineer">    <link rel=alternate href=/feed/index.xml type=application/rss+xml title="Benjamin Cane">    <link rel=alternate hreflang=en-us href=https://bencane.com/>
+    <meta property="og:description" content="Distributed Systems and Software Engineer">    <link rel=alternate href=/feed/index.xml type=application/rss+xml title="Ope Omotayo">    <link rel=alternate hreflang=en-us href=https://bencane.com/>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -66,7 +66,7 @@
   <div class="backimg"></div>
   <div class="jumbotron" style="background: #222 url(bsd-bg.png) bottom right no-repeat">
     <div class="container">
-      <h1 class="display-2 text-white">Benjamin Cane</h1>
+      <h1 class="display-2 text-white">Ope Omotayo</h1>
       <div class="row">
           <div class="col-md-6">
           <p class="lead text-white">Principal Engineer focused on building mission-critical infrastructure and software platforms. Platforms purpose-built for performance and resiliency.</p>

@@ -1,6 +1,6 @@
 ---
 authors:
-- Benjamin Cane
+- Ope Omotayo
 categories:
 - SaltStack
 date: '2014-05-19T05:20:00'

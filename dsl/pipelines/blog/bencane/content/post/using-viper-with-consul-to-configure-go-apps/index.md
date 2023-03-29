@@ -5,7 +5,7 @@ aliases: ["/post/using-viper-with-consul-to-configure-go-apps/"]
 draft: false
 subtitle: "Learn how to use Consul with the popular Go configuration package Viper"
 summary: "Viper is a powerful configuration library which also supports pulling configuration from Consul. However, using Consul is not straightforward. This article explains how to use Viper with Consul"
-authors: ["Benjamin Cane"]
+authors: ["Ope Omotayo"]
 tags: ["golang", "consul"]
 categories: ["Software Engineering"]
 featured: true

@@ -1,6 +1,6 @@
 ---
 authors:
-- Benjamin Cane
+- Ope Omotayo
 categories:
 - Bash Scripting
 date: '2014-06-06T07:00:00'
@@ -52,7 +52,7 @@ Here is an example header.
     #### Description: Adds users based on provided CSV file 
     #### CSV file must use : as separator
     #### uid:username:comment:group:addgroups:/home/dir:/usr/shell:passwdage:password
-    #### Written by: Benjamin Cane - ben@example.com on 03-2012
+    #### Written by: Ope Omotayo - ben@example.com on 03-2012
 
 Why do I put all of this? Well it's simple. The description is there to explain to anyone who is reading through the script what this script does and any information they need to know about it. I include my name and email on the chance that if someone was reading this script and they had a question for me they could reach out and ask. I include the date so that when they are reading the script they at least have some context as to how long ago the script was written. The date also adds a bit of nostalgia when you find a script you've written long ago and ask yourself "What was I thinking when I wrote this?".
 

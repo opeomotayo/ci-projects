@@ -1,6 +1,6 @@
 ---
 authors:
-- Benjamin Cane
+- Ope Omotayo
 categories:
 - Docker
 - Containers
@@ -224,7 +224,7 @@ The first instruction of a Dockerfile is the `FROM` instruction. This is used to
 ## Dockerfile that generates an instance of http://bencane.com
 
 FROM nginx:latest
-MAINTAINER Benjamin Cane <ben@bencane.com>
+MAINTAINER Ope Omotayo <ben@bencane.com>
 ```
 
 In addition to the `FROM` instruction, I also included a `MAINTAINER` instruction which is used to show the Author of the Dockerfile.
@@ -243,7 +243,7 @@ Sending build context to Docker daemon  23.6 MB
 Sending build context to Docker daemon
 Step 0 : FROM nginx:latest
  ---> 9fab4090484a
-Step 1 : MAINTAINER Benjamin Cane <ben@bencane.com>
+Step 1 : MAINTAINER Ope Omotayo <ben@bencane.com>
  ---> Running in c97f36450343
  ---> 60a44f78d194
 Removing intermediate container c97f36450343
@@ -264,7 +264,7 @@ The static site generator used to generate the HTML pages is written in **Python
 ## Dockerfile that generates an instance of http://bencane.com
 
 FROM nginx:latest
-MAINTAINER Benjamin Cane <ben@bencane.com>
+MAINTAINER Ope Omotayo <ben@bencane.com>
 
 ## Install python and pip
 RUN apt-get update
@@ -287,7 +287,7 @@ In order to install the required **Python** modules we will need to copy the `re
 ## Dockerfile that generates an instance of http://bencane.com
 
 FROM nginx:latest
-MAINTAINER Benjamin Cane <ben@bencane.com>
+MAINTAINER Ope Omotayo <ben@bencane.com>
 
 ## Install python and pip
 RUN apt-get update
@@ -315,7 +315,7 @@ Sending build context to Docker daemon 19.52 MB
 Sending build context to Docker daemon
 Step 0 : FROM nginx:latest
  ---> 9fab4090484a
-Step 1 : MAINTAINER Benjamin Cane <ben@bencane.com>
+Step 1 : MAINTAINER Ope Omotayo <ben@bencane.com>
  ---> Using cache
  ---> 8e0f1899d1eb
 Step 2 : RUN apt-get update
@@ -368,7 +368,7 @@ With the **Python** packages and modules installed this leaves us at the point o
 ## Dockerfile that generates an instance of http://bencane.com
 
 FROM nginx:latest
-MAINTAINER Benjamin Cane <ben@bencane.com>
+MAINTAINER Ope Omotayo <ben@bencane.com>
 
 ## Install python and pip
 RUN apt-get update
@@ -400,7 +400,7 @@ Sending build context to Docker daemon 19.52 MB
 Sending build context to Docker daemon
 Step 0 : FROM nginx:latest
  ---> 9fab4090484a
-Step 1 : MAINTAINER Benjamin Cane <ben@bencane.com>
+Step 1 : MAINTAINER Ope Omotayo <ben@bencane.com>
  ---> Using cache
  ---> 8e0f1899d1eb
 Step 2 : RUN apt-get update
