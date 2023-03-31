@@ -24,7 +24,7 @@ pipeline {
 
     stage('Build Image') { 
       steps {
-        dir('ci-pipeliness/todo-ci') {
+        dir('ci-pipelines/todo-ci') {
           script {
             app = docker.build("opeomotayo/todo-app")
           }
