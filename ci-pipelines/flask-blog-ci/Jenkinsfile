@@ -25,7 +25,7 @@ pipeline {
 
     stage('Build App Image') { 
       steps {
-        dir('dsl/pipelines/flask-blog-ci/app') {
+        dir('ci-pipeliness/flask-blog-ci/app') {
           script {
             app = docker.build("opeomotayo/flask-blog")
           }
@@ -35,7 +35,7 @@ pipeline {
 
     stage('Build DB Image') { 
       steps {
-        dir('dsl/pipelines/flask-blog-ci/db') {
+        dir('ci-pipeliness/flask-blog-ci/db') {
           script {
             db = docker.build("opeomotayo/mysql-blog")
           }
