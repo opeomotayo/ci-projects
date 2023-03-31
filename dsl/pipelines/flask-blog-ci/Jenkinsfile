@@ -25,7 +25,7 @@ pipeline {
 
     stage('Build App Image') { 
       steps {
-        dir('ci-pipelines/flask-blog-ci/app') {
+        dir('dsl/pipelines/flask-blog-ci/app') {
           script {
             app = docker.build("opeomotayo/flask-blog")
           }
@@ -35,13 +35,14 @@ pipeline {
 
     stage('Build DB Image') { 
       steps {
-        dir('ci-pipelines/flask-blog-ci/db') {
+        dir('dsl/pipelines/flask-blog-ci/db') {
           script {
             db = docker.build("opeomotayo/mysql-blog")
           }
         }
       }
     }
+
 
     // stage('SonarQube Analysis') {
     //     steps{
