@@ -43,7 +43,7 @@ pipeline {
     //     }
     // }
 
-    stage('Push Image') {
+    stage('Tag and Push Image') {
         steps { 
             script {  
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {     
