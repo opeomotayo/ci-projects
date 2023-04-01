@@ -1,5 +1,5 @@
-def shop-api
-def shop-ui
+def shopapi
+def shopui
 def website
 
 pipeline {
@@ -28,7 +28,7 @@ pipeline {
       steps {
         dir('ci-pipelines/bookstore-ci/shop-api') {
           script {
-            shop-api = docker.build("opeomotayo/shop-api")
+            shopapi = docker.build("opeomotayo/shop-api")
           }
         }
       }
@@ -37,7 +37,7 @@ pipeline {
       steps {
         dir('ci-pipelines/bookstore-ci/shop-ui') {
           script {
-            shop-ui = docker.build("opeomotayo/shop-ui")
+            shopui = docker.build("opeomotayo/shop-ui")
           }
         }
       }
