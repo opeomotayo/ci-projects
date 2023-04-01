@@ -68,8 +68,8 @@ pipeline {
             script {  
                 if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {     
                   docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
-                    shop-api.push("${env.BUILD_NUMBER}")
-                    shop-ui.push("${env.BUILD_NUMBER}")
+                    shopapi.push("${env.BUILD_NUMBER}")
+                    shopui.push("${env.BUILD_NUMBER}")
                     website.push("${env.BUILD_NUMBER}")
                   }
                 }
