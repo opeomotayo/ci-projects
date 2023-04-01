@@ -2,7 +2,7 @@
   "name": "book-shopping",
   "version": "1.0.0",
   "description": "Bookstore Shopping Application",
-  "author": "Chandra Shettigar",
+  "author": "Ope Omotayo",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",

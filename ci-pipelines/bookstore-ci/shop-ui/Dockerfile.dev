@@ -1,5 +1,5 @@
 FROM node:8.2 as dev
-LABEL maintainer="Chandra Shettigar"
+LABEL maintainer="Ope Omotayo"
 RUN mkdir /web
 WORKDIR /web
 RUN npm install --global vue-cli

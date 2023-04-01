@@ -1,0 +1,94 @@
+def shop-api
+def shop-ui
+def website
+
+pipeline {
+  options {
+    skipStagesAfterUnstable()
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
+
+  agent {
+    kubernetes {
+      yamlFile 'build-pod.yaml'
+      defaultContainer 'devops-tools'      
+    }
+  }
+
+  stages {
+    stage('Clone Bookstore Repository') { 
+      steps { 
+        script {
+          checkout scm
+        }
+      }
+    }
+
+    stage('Build shop-api Image') { 
+      steps {
+        dir('ci-pipelines/bookstore-ci/shop-api') {
+          script {
+            shop-api = docker.build("opeomotayo/shop-api")
+          }
+        }
+      }
+    }
+    stage('Build shop-ui Image') { 
+      steps {
+        dir('ci-pipelines/bookstore-ci/shop-ui') {
+          script {
+            shop-ui = docker.build("opeomotayo/shop-ui")
+          }
+        }
+      }
+    }
+    stage('Build website Image') { 
+      steps {
+        dir('ci-pipelines/bookstore-ci/website') {
+          script {
+            website = docker.build("opeomotayo/website")
+          }
+        }
+      }
+    }
+
+    // stage('SonarQube Analysis') {
+    //     steps{
+    //         script{
+    //             scannerHome = tool 'sonarqube-scanner';
+    //         }
+    //         withSonarQubeEnv('sonarqube-server') {
+    //           sh "${scannerHome}/bin/sonar-scanner"
+    //         }
+    //     }
+    // }
+
+    stage('Push Bookstore Images') {
+        steps { 
+            script {  
+                if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {     
+                  docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
+                    shop-api.push("${env.BUILD_NUMBER}")
+                    shop-ui.push("${env.BUILD_NUMBER}")
+                    website.push("${env.BUILD_NUMBER}")
+                  }
+                }
+            }
+        }
+    }
+    
+    stage('Trigger bookstore-cd Job') {
+      steps { 
+        script {  
+          sh "printenv"
+          echo "triggering the pipeline that updates deployment image tag"
+          // paramAValue = "paramAValue"
+          // paramBValue = "paramBValue"
+          //  build job: 'html-blog-cd', wait: false, parameters: [string(name: 'HELLO', value: "${env.BUILD_NUMBER}")]
+          // build job: 'downstream-freestyle', parameters: [[$class: 'StringParameterValue', name: 'ParamA', value: paramAValue], [$class: 'StringParameterValue', name: 'ParamB', value: paramBValue]]
+          def job = build job: 'bookstore-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}"]]
+        }
+      }    
+    }
+  }
+}

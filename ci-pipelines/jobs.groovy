@@ -145,3 +145,45 @@ pipelineJob('html-blog-cd') {
     }  
   }       
 }
+
+pipelineJob('bookstore-ci') {
+  logRotator {
+    numToKeep(10)
+    daysToKeep(30)
+  }
+  triggers {
+    githubPush()
+  }
+  definition {
+    cpsScm {
+      scm {
+        git {
+          remote {
+            github('opeomotayo/ci-projects')
+          }
+          branches('main')
+        }
+      }   
+      scriptPath('ci-pipelines/bookstore-ci/Jenkinsfile')
+    }  
+  }       
+}
+pipelineJob('bookstore-cd') {
+  logRotator {
+    numToKeep(10)
+    daysToKeep(30)
+  }
+  definition {
+    cpsScm {
+      scm {
+        git {
+          remote {
+              github('opeomotayo/cd-projects')
+          }
+          branches('main')
+        }
+      }   
+      scriptPath('technologies/cd-pipelines/bookstore-cd/Jenkinsfile')
+    }  
+  }       
+}
