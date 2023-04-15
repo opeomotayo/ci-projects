@@ -3,10 +3,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: filebeat-config
-  namespace: default
+  namespace: elk-stack
   labels:
     k8s-app: filebeat
-    namespace: elk-stack
 data:
   filebeat.yml: |-
     filebeat.autodiscover:
