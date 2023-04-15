@@ -5,7 +5,7 @@ metadata:
   labels:
     app: order-service
   name: order-service
-  namespace: elk-stack
+  namespace: java-bewery
 spec:
   replicas: 1
   selector:

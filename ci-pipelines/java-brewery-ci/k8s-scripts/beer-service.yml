@@ -5,7 +5,7 @@ metadata:
   labels:
     app: beer-service
   name: beer-service
-  namespace: elk-stack
+  namespace: java-bewery
 spec:
   ports:
   - name: 8080-8080

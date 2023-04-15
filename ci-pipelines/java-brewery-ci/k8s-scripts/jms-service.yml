@@ -5,7 +5,7 @@ metadata:
   labels:
     app: jms
   name: jms
-  namespace: elk-stack
+  namespace: java-bewery
 spec:
   ports:
   - name: 8161-8161

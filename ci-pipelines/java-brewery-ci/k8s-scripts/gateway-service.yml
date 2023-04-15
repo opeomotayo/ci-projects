@@ -5,7 +5,7 @@ metadata:
   labels:
     app: gateway
   name: gateway
-  namespace: elk-stack
+  namespace: java-bewery
 spec:
   ports:
   - name: 9090-9090
