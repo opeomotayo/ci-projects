@@ -5,6 +5,7 @@ metadata:
   labels:
     app: elasticsearch
   name: elasticsearch
+  namespace: elk-stack
 spec:
   replicas: 1
   selector:
@@ -24,4 +25,14 @@ spec:
         env:
           - name: discovery.type
             value: single-node
+          - name: ES_JAVA_OPTS
+             value: -Xms1g -Xmx1g
+          resources:
+            requests:
+              memory: 2Gi
+              cpu: "2"
+            limits:
+              memory: 8Gi
+              cpu: "4"
+            
 status: {}

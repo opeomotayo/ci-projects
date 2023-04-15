@@ -5,6 +5,7 @@ metadata:
   labels:
     app: mysql
   name: mysql
+  namespace: elk-stack
 spec:
   ports:
   - name: 3306-3306

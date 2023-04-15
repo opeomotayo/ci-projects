@@ -5,6 +5,7 @@ metadata:
   labels:
     app: inventory-failover
   name: inventory-failover
+  namespace: elk-stack
 spec:
   ports:
   - name: 8083-8083

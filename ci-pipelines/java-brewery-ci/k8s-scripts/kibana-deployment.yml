@@ -5,6 +5,7 @@ metadata:
   labels:
     app: kibana
   name: kibana
+  namespace: elk-stack
 spec:
   replicas: 1
   selector:

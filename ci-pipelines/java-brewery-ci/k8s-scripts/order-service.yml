@@ -5,6 +5,7 @@ metadata:
   labels:
     app: order-service
   name: order-service
+  namespace: elk-stack
 spec:
   ports:
   - name: 8081-8081

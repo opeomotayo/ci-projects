@@ -5,6 +5,7 @@ metadata:
   labels:
     app: gateway
   name: gateway
+  namespace: elk-stack
 spec:
   ports:
   - name: 9090-9090

@@ -5,6 +5,7 @@ metadata:
   labels:
     app: inventory-service
   name: inventory-service
+  namespace: elk-stack
 spec:
   ports:
   - name: 8082-8082

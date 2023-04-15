@@ -5,6 +5,7 @@ metadata:
   labels:
     app: mysql
   name: mysql
+  namespace: elk-stack
 spec:
   replicas: 1
   selector:

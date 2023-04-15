@@ -5,6 +5,7 @@ metadata:
   labels:
     app: elasticsearch
   name: elasticsearch
+  namespace: elk-stack
 spec:
   ports:
   - name: 9200-9200
