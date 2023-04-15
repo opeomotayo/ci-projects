@@ -27,12 +27,12 @@ spec:
             value: single-node
           - name: ES_JAVA_OPTS
             value: -Xms1g -Xmx1g
-          resources:
-            requests:
-              memory: 2Gi
-              cpu: "2"
-            limits:
-              memory: 8Gi
-              cpu: "4"
+        resources:
+          requests:
+            memory: 2Gi
+            cpu: "2"
+          limits:
+            memory: 8Gi
+            cpu: "4"
             
 status: {}
