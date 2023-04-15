@@ -21,5 +21,14 @@ spec:
       containers:
       - image: docker.elastic.co/kibana/kibana:7.12.1
         name: kibana
-        resources: {}
+        resources:
+          requests:
+            memory: 1Gi
+            cpu: "1"
+          limits:
+            memory: 2Gi
+            cpu: "4"
+        env:
+          - name: ES_JAVA_OPTS
+            value: -Xms1g -Xmx1g 
 status: {}
