@@ -1,3 +1,2 @@
-FROM apache/airflow:2.6.0b1-python3.10
-
+FROM apache/airflow:1.10.10-2-python3.7
 COPY dags $AIRFLOW_HOME/dags

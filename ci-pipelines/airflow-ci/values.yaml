@@ -27,14 +27,9 @@ gid: 50000
 # Used for mount paths
 airflowHome: "/opt/airflow"
 
-# # Default airflow repository -- overrides all the specific images below
-# defaultAirflowRepository: apache/airflow
-
-# # Default airflow tag to deploy
-# defaultAirflowTag: 2.6.0b1-python3.10
 defaultAirflowRepository: opeomotayo/airflow
 # Default airflow tag to deploy
-defaultAirflowTag: 1.0.0
+defaultAirflowTag: 2.0.0
 
 
 # Select certain nodes for airflow pods.
@@ -116,7 +111,7 @@ env:
   - name: "AIRFLOW__KUBERNETES__WORKER_CONTAINER_REPOSITORY"
     value: "opeomotayo/airflow"
   - name: "AIRFLOW__KUBERNETES__WORKER_CONTAINER_TAG"
-    value: "1.0.0"
+    value: "2.0.0"
   - name: "AIRFLOW__KUBERNETES__RUN_AS_USER"
     value: "50000"
   - name: "AIRFLOW__KUBERNETES__DAGS_IN_IMAGE"
