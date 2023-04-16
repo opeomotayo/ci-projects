@@ -3,9 +3,14 @@
 ########################################
 # Default airflow repository -- overrides all the specific images below
 defaultAirflowRepository: opeomotayo/airflow
-
 # Default airflow tag to deploy
 defaultAirflowTag: 1.0.0
+
+# Environment variables for all airflow containers
+env: []
+# - name: ""
+#   value: ""
+
 airflow:
   ## if we use legacy 1.10 airflow commands
   ##
