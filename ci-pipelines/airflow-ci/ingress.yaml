@@ -3,23 +3,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: kibana-ingress
-  namespace: elk-stack
+  name: airflow-ingress
+  namespace: airflow
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
   - hosts:
-      - kibana.opeomotayo.net
-    secretName: kibana-production-certificate
+      - airflow.opeomotayo.net
+    secretName: airflow-production-certificate
   rules:
-  - host: kibana.opeomotayo.net
+  - host: airflow.opeomotayo.net
     http:
       paths:
       - backend:
           service:
-            name: kibana
+            name: airflow-webserver
             port:
-              number:  5601
+              number: 8080
         path: /
         pathType: Prefix
