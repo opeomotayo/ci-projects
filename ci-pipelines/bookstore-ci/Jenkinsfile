@@ -24,15 +24,15 @@ pipeline {
       }
     }
 
-    // stage('Build shop-api Image') { 
-    //   steps {
-    //     dir('ci-pipelines/bookstore-ci/shop-api') {
-    //       script {
-    //         shopapi = docker.build("opeomotayo/shop-api")
-    //       }
-    //     }
-    //   }
-    // }
+    stage('Build shop-api Image') { 
+      steps {
+        dir('ci-pipelines/bookstore-ci/shop-api') {
+          script {
+            shopapi = docker.build("opeomotayo/shop-api")
+          }
+        }
+      }
+    }
     stage('Build shop-ui Image') { 
       steps {
         dir('ci-pipelines/bookstore-ci/shop-ui') {
