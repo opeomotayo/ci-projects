@@ -57,7 +57,7 @@ pipelineJob('todo-cd') {
           branches('main')
         }
       }   
-      scriptPath('technologies/cd-pipelines/todo-cd/Jenkinsfile')
+      scriptPath('cd-pipelines/todo-cd/Jenkinsfile')
     }  
   }       
 }
@@ -99,7 +99,7 @@ pipelineJob('flask-blog-cd') {
           branches('main')
         }
       }   
-      scriptPath('technologies/cd-pipelines/flask-blog-cd/Jenkinsfile')
+      scriptPath('cd-pipelines/flask-blog-cd/Jenkinsfile')
     }  
   }       
 }
@@ -141,7 +141,7 @@ pipelineJob('html-blog-cd') {
           branches('main')
         }
       }   
-      scriptPath('technologies/cd-pipelines/html-blog-cd/Jenkinsfile')
+      scriptPath('cd-pipelines/html-blog-cd/Jenkinsfile')
     }  
   }       
 }
@@ -183,7 +183,7 @@ pipelineJob('bookstore-cd') {
           branches('main')
         }
       }   
-      scriptPath('technologies/cd-pipelines/bookstore-cd/Jenkinsfile')
+      scriptPath('cd-pipelines/bookstore-cd/Jenkinsfile')
     }  
   }       
 }
