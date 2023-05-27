@@ -68,7 +68,7 @@ pipeline {
         // // sh "${scannerHome}/bin/sonar-scanner"
         // sh "mvn sonar:sonar"
           withSonarQubeEnv('sonarqube-8.9.10') {  //This is the server you added
-            sh "${scannerHome}/bin/sonar-scanner"
+            sh "${SCANNER_HOME}/bin/sonar-scanner"
           }
         // }
         }
