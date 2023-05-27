@@ -57,24 +57,23 @@ pipeline {
       }
     }
 
-    stage('SonarQube analysis') {
-        // tools {
-        //   sonarQube 'sonarqube-scanner-4.8.0'
-        // }
+    stage('SonarQube Analysis') {
         steps{
           dir('ci-pipelines/bookstore-ci/shop-api') {
-        // withSonarQubeEnv('sonarqube-8.9.10') { 
-        // // If you have configured more than one global server connection, you can specify its name
-        // // sh "${scannerHome}/bin/sonar-scanner"
-        // sh "mvn sonar:sonar"
-          withSonarQubeEnv('sonarqube-8.9.10') {  //This is the server you added
-            // sh "${SCANNER_HOME}/bin/sonar-scanner"
+          withSonarQubeEnv('sonarqube-8.9.10') {
             sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
                   -Dsonar.java.binaries=build/classes/java/ \
                   -Dsonar.projectKey=$PROJECT_NAME \
                   -Dsonar.sources=.'''
           }
         // }
+        }
+      }
+    }
+    stage("Quality Gate") {
+      steps {
+        timeout(time: 1, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
         }
       }
     }
@@ -93,7 +92,7 @@ pipeline {
         }
     }
     
-    stage('Trigger bookstore-cd Job') {
+    stage('Trigger CD Job') {
       steps { 
         script {  
           sh "printenv"
