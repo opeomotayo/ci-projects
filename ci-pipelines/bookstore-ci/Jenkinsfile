@@ -59,8 +59,8 @@ pipeline {
         // // If you have configured more than one global server connection, you can specify its name
         // // sh "${scannerHome}/bin/sonar-scanner"
         // sh "mvn sonar:sonar"
-          def scannerHome = tool 'sonarqube-scanner-4.8.0'  #This is the scanner you added
-          withSonarQubeEnv('sonarqube-8.9.10') {  #This is the server you added
+          def scannerHome = tool 'sonarqube-scanner-4.8.0'  //This is the scanner you added
+          withSonarQubeEnv('sonarqube-8.9.10') {  //This is the server you added
             sh "${scannerHome}/bin/sonar-scanner"
           }
         // }
