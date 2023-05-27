@@ -1,3 +1,4 @@
+Helpful sonar link: https://www.devopsschool.com/blog/how-to-execute-sonarqube-scanner-using-jenkins-pipeline/
 # Example Application: BookStore Services
 
 Consists of 3 components or services
