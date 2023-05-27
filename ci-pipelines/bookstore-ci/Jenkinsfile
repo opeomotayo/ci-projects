@@ -82,7 +82,7 @@ pipeline {
         }
       }
     }
-    stage("Quality Gate") {
+    stage("Quality Gate for shop-ui") {
       steps {
         dir('ci-pipelines/bookstore-ci/shop-ui') {
           timeout(time: 1, unit: 'MINUTES') {
@@ -112,7 +112,7 @@ pipeline {
         }
       }
     }
-    stage("Quality Gate") {
+    stage("Quality Gate for website") {
       steps {
         dir('ci-pipelines/bookstore-ci/website') {
           timeout(time: 1, unit: 'MINUTES') {
