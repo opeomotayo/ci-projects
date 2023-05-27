@@ -54,7 +54,7 @@ pipeline {
 
     stage('SonarQube analysis') {
         tools {
-          sonarQube 'sonarqube-scanner-4.8.0' //This is the scanner you added
+          sonarQube 'sonarqube-scanner-4.8.0'
         }
         steps{
           dir('ci-pipelines/bookstore-ci/shop-api') {
