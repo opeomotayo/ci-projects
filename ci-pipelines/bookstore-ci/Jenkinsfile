@@ -14,6 +14,11 @@ pipeline {
       defaultContainer 'devops-tools'      
     }
   }
+  environment {
+    SCANNER_HOME = tool 'sonarqube-scanner-4.8.0'
+    // ORGANIZATION = "igorstojanovski-github"
+    // PROJECT_NAME = "igorstojanovski_jenkins-pipeline-as-code"
+  }
 
   stages {
     stage('Clone Bookstore Repository') { 
@@ -53,9 +58,9 @@ pipeline {
     }
 
     stage('SonarQube analysis') {
-        tools {
-          sonarQube 'sonarqube-scanner-4.8.0'
-        }
+        // tools {
+        //   sonarQube 'sonarqube-scanner-4.8.0'
+        // }
         steps{
           dir('ci-pipelines/bookstore-ci/shop-api') {
         // withSonarQubeEnv('sonarqube-8.9.10') { 
