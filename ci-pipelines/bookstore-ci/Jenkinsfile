@@ -16,8 +16,8 @@ pipeline {
   }
   environment {
     SCANNER_HOME = tool 'sonarqube-scanner-4.8.0'
-    // ORGANIZATION = "igorstojanovski-github"
-    // PROJECT_NAME = "igorstojanovski_jenkins-pipeline-as-code"
+    ORGANIZATION = "opeomotayo"
+    PROJECT_NAME = "bookstore"
   }
 
   stages {
@@ -68,7 +68,11 @@ pipeline {
         // // sh "${scannerHome}/bin/sonar-scanner"
         // sh "mvn sonar:sonar"
           withSonarQubeEnv('sonarqube-8.9.10') {  //This is the server you added
-            sh "${SCANNER_HOME}/bin/sonar-scanner"
+            // sh "${SCANNER_HOME}/bin/sonar-scanner"
+            sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+                  -Dsonar.java.binaries=build/classes/java/ \
+                  -Dsonar.projectKey=$PROJECT_NAME \
+                  -Dsonar.sources=.'''
           }
         // }
         }
