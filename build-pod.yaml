@@ -17,28 +17,28 @@ spec:
     tty: true
     resources:
       requests:
-        cpu: 100m
-        memory: 50Mi
+        cpu: 50m
+        memory: 25Mi
       limits:
-        cpu: 500m
-        memory: 500Mi
-  - name: security-tools
-    image: opeomotayo/security-tools:latest
-    imagePullPolicy: Always
-    volumeMounts:
-    - name: dockersock
-      mountPath: /var/run/docker.sock
-    command:
-    - cat
-    tty: true
-    resources:
-      requests:
-        cpu: 100m
-        memory: 50Mi
-      limits:
-        cpu: 500m
-        memory: 500Mi
-  volumes:
-  - name: dockersock
-    hostPath:
-      path: /var/run/docker.sock
+        cpu: 250m
+        memory: 250Mi
+  # - name: security-tools
+  #   image: opeomotayo/security-tools:latest
+  #   imagePullPolicy: Always
+  #   volumeMounts:
+  #   - name: dockersock
+  #     mountPath: /var/run/docker.sock
+  #   command:
+  #   - cat
+  #   tty: true
+  #   resources:
+  #     requests:
+  #       cpu: 100m
+  #       memory: 50Mi
+  #     limits:
+  #       cpu: 500m
+  #       memory: 500Mi
+  # volumes:
+  # - name: dockersock
+  #   hostPath:
+  #     path: /var/run/docker.sock
