@@ -60,6 +60,15 @@ pipeline {
         }
       }
     }
+    stage('Run Vulnerability Scan') {
+      steps {
+        container('security-tools'){
+          dir('ci-pipelines/bookstore-ci/shop-api') {
+            sh 'grype opeomotayo/shop-api:latest --scope AllLayers' //--fail-on=critical
+          }
+        }
+      }
+    }
     stage('Build shop-ui Image') { 
       steps {
         dir('ci-pipelines/bookstore-ci/shop-ui') {
