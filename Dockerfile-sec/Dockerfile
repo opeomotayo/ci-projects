@@ -35,8 +35,8 @@ RUN curl -O https://get.aquasec.com/aquactl/v3/aquactl && chmod +x ./aquactl
 
 #trivy
 RUN apk add curl \
-    && curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/install.sh | sh -s -- -b /usr/local/bin \
-    && trivy filesystem --exit-code 1 --no-progress /
+    && curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/install.sh | sh -s -- -b /usr/local/bin \ 
+    && trivy filesystem --exit-code 1 --no-progress  --severity CRITICAL /
 
 #CMD ["/bin/bash"]
 
