@@ -11,7 +11,7 @@ pipeline {
   agent {
     kubernetes {
       yamlFile 'build-pod.yaml'
-      defaultContainer 'security-tools'      
+      defaultContainer 'devops-tools'      
     }
   }
   environment {
@@ -47,7 +47,6 @@ pipeline {
                   -Dsonar.projectKey=bookstore-shop-api \
                   -Dsonar.sources=.'''
           }
-        // }
         }
       }
     }
@@ -60,17 +59,16 @@ pipeline {
         }
       }
     }
-    stage('Run Vulnerability Scan') {
-      steps {
-        // container('security-tools'){
-          dir('ci-pipelines/bookstore-ci/shop-api') {
-            sh "grype opeomotayo/shop-api:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
-          }
-        // }
-      }
-    }
-
-
+    // stage('Run Vulnerability Scan') {
+    //   steps {
+    //     container('security-tools'){
+    //       dir('ci-pipelines/bookstore-ci/shop-api') {
+    //         sh "grype opeomotayo/shop-api:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
+    //       }
+    //     }
+    //   }
+    // }
+    
     stage('Build shop-ui Image') { 
       steps {
         dir('ci-pipelines/bookstore-ci/shop-ui') {
@@ -111,8 +109,6 @@ pipeline {
         }
       }
     }
-
-
     stage('SonarQube Analysis for website') {
         steps{
           dir('ci-pipelines/bookstore-ci/website') {
