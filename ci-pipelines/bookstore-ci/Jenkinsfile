@@ -64,7 +64,7 @@ pipeline {
       steps {
         container('security-tools'){
           dir('ci-pipelines/bookstore-ci/shop-api') {
-            sh 'grype opeomotayo/shop-api:latest' //--scope AllLayers --fail-on=critical
+            sh "grype opeomotayo/shop-api:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
           }
         }
       }
