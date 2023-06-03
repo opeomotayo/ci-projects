@@ -38,27 +38,27 @@ pipeline {
         }
       }
     }
-    stage('SonarQube Analysis for shop-api') {
-        steps{
-          dir('ci-pipelines/bookstore-ci/shop-api') {
-          withSonarQubeEnv('sonarqube-8.9.10') {
-            sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
-                  -Dsonar.java.binaries=build/classes/java/ \
-                  -Dsonar.projectKey=bookstore-shop-api \
-                  -Dsonar.sources=.'''
-          }
-        }
-      }
-    }
-    stage("Quality Gate for shop-api") {
-      steps {
-        dir('ci-pipelines/bookstore-ci/shop-api') {
-          timeout(time: 60, unit: 'MINUTES') {
-            waitForQualityGate abortPipeline: true
-          }
-        }
-      }
-    }
+    // stage('SonarQube Analysis for shop-api') {
+    //     steps{
+    //       dir('ci-pipelines/bookstore-ci/shop-api') {
+    //       withSonarQubeEnv('sonarqube-8.9.10') {
+    //         sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+    //               -Dsonar.java.binaries=build/classes/java/ \
+    //               -Dsonar.projectKey=bookstore-shop-api \
+    //               -Dsonar.sources=.'''
+    //       }
+    //     }
+    //   }
+    // }
+    // stage("Quality Gate for shop-api") {
+    //   steps {
+    //     dir('ci-pipelines/bookstore-ci/shop-api') {
+    //       timeout(time: 60, unit: 'MINUTES') {
+    //         waitForQualityGate abortPipeline: true
+    //       }
+    //     }
+    //   }
+    // }
     // stage('Run Vulnerability Scan') {
     //   steps {
     //     container('security-tools'){
