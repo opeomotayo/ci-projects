@@ -11,7 +11,7 @@ pipeline {
   agent {
     kubernetes {
       yamlFile 'build-pod.yaml'
-      defaultContainer 'devops-tools'      
+      defaultContainer 'security-tools'      
     }
   }
   environment {
@@ -59,15 +59,15 @@ pipeline {
     //     }
     //   }
     // }
-    // stage('Run Vulnerability Scan') {
-    //   steps {
-    //     container('security-tools'){
-    //       dir('ci-pipelines/bookstore-ci/shop-api') {
-    //         sh "grype opeomotayo/shop-api:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
-    //       }
-    //     }
-    //   }
-    // }
+    stage('Run Vulnerability Scan') {
+      steps {
+        container('security-tools'){
+          dir('ci-pipelines/bookstore-ci/shop-api') {
+            sh "grype opeomotayo/shop-api:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
+          }
+        }
+      }
+    }
     
     stage('Build shop-ui Image') { 
       steps {
