@@ -61,11 +61,11 @@ pipeline {
     // }
     stage('Run Vulnerability Scan') {
       steps {
-        container('security-tools'){
+        // container('security-tools'){
           dir('ci-pipelines/bookstore-ci/shop-api') {
-            sh "grype opeomotayo/shop-api:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
+            sh "grype opeomotayo/shop-api" //--scope AllLayers --fail-on=critical
           }
-        }
+        // }
       }
     }
     
