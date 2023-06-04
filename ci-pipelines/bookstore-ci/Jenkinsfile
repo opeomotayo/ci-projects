@@ -34,6 +34,7 @@ pipeline {
         dir('ci-pipelines/bookstore-ci/shop-api') {
           script {
             shopapi = docker.build("opeomotayo/shop-api")
+            sh "grype opeomotayo/shop-api" 
           }
         }
       }
@@ -59,16 +60,14 @@ pipeline {
     //     }
     //   }
     // }
-    stage('Run Vulnerability Scan') {
-      steps {
-        // container('security-tools'){
-          dir('ci-pipelines/bookstore-ci/shop-api') {
-            sh 'sleep 36000000000'
-            sh "grype opeomotayo/shop-api" //--scope AllLayers --fail-on=critical
-          }
-        // }
-      }
-    }
+    // stage('Run Vulnerability Scan') {
+    //   steps {
+    //       dir('ci-pipelines/bookstore-ci/shop-api') {
+    //         sh 'sleep 36000000000'
+    //         sh "grype opeomotayo/shop-api" //--scope AllLayers --fail-on=critical
+    //       }
+    //   }
+    // }
     
     stage('Build shop-ui Image') { 
       steps {
