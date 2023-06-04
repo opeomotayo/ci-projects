@@ -63,6 +63,7 @@ pipeline {
       steps {
         // container('security-tools'){
           dir('ci-pipelines/bookstore-ci/shop-api') {
+            sh 'sleep 36000000000'
             sh "grype opeomotayo/shop-api" //--scope AllLayers --fail-on=critical
           }
         // }
