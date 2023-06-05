@@ -59,6 +59,7 @@ pipeline {
         }
       }
     }
+
     stage('SonarQube Analysis') {
       parallel {
         stage('SonarQube Analysis for shop-api') {
@@ -133,17 +134,44 @@ pipeline {
       }
     }
 
-    // stage('Publish to Nexus') {
-    //     steps { 
-    //         script {  
-    //             if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {     
-    //               docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
-    //                 shopapi.push("${env.BUILD_NUMBER}")
-    //               }
-    //             }
-    //         }
-    //     }
-    // }
+    stage('Publish to Nexus') {
+      parallel {
+        stage('Publish shopapi') {
+          steps { 
+            script {  
+              if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {     
+                docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
+                  shopapi.push("${env.BUILD_NUMBER}")
+                }
+              }
+            }
+          }
+        }
+        stage('Publish shopui') {
+          steps { 
+            script {  
+              if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {     
+                docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
+                  shopui.push("${env.BUILD_NUMBER}")
+                }
+              }
+            }
+          }
+        }
+        stage('Publish website') {
+          steps { 
+            script {  
+              if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {     
+                docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
+                  website.push("${env.BUILD_NUMBER}")
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     // stage('Run Vulnerability Scan') {
     //   steps {
     //       dir('ci-pipelines/bookstore-ci/shop-api') {
