@@ -189,14 +189,6 @@ pipeline {
             sh "grype opeomotayo/website:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
           }
         }
-
-      }
-    }
-    stage('Run Vulnerability Scan') {
-      steps {
-          dir('ci-pipelines/bookstore-ci/shop-api') {
-            sh "grype opeomotayo/shop-api:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
-          }
       }
     }
     
