@@ -28,97 +28,99 @@ pipeline {
         }
       }
     }
-    parallel {
-      stage('Build shop-api Image') { 
-        steps {
-          dir('ci-pipelines/bookstore-ci/shop-api') {
-            script {
-              shopapi = docker.build("opeomotayo/shop-api")
+    stage('Build Image') {
+      parallel {
+        stage('Build shop-api Image') { 
+          steps {
+            dir('ci-pipelines/bookstore-ci/shop-api') {
+              script {
+                shopapi = docker.build("opeomotayo/shop-api")
+              }
+            }
+          }
+        }
+        stage('Build shop-ui Image') { 
+          steps {
+            dir('ci-pipelines/bookstore-ci/shop-ui') {
+              script {
+                shopui = docker.build("opeomotayo/shop-ui")
+              }
+            }
+          }
+        }
+        stage('Build website Image') { 
+          steps {
+            dir('ci-pipelines/bookstore-ci/website') {
+              script {
+                website = docker.build("opeomotayo/website")
+              }
             }
           }
         }
       }
-      stage('Build shop-ui Image') { 
-        steps {
-          dir('ci-pipelines/bookstore-ci/shop-ui') {
-            script {
-              shopui = docker.build("opeomotayo/shop-ui")
-            }
-          }
-        }
-      }
-       stage('Build website Image') { 
-        steps {
-          dir('ci-pipelines/bookstore-ci/website') {
-            script {
-              website = docker.build("opeomotayo/website")
-            }
-          }
-        }
-      }
-
     }
-
-    parallel {
-      stage('SonarQube Analysis for shop-api') {
-        steps{
-          dir('ci-pipelines/bookstore-ci/shop-api') {
-            withSonarQubeEnv('sonarqube-8.9.10') {
-              sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
-                    -Dsonar.java.binaries=build/classes/java/ \
-                    -Dsonar.projectKey=bookstore-shop-api \
-                    -Dsonar.sources=.'''
+    stage('Test Image') {
+      parallel {
+        stage('SonarQube Analysis for shop-api') {
+          steps{
+            dir('ci-pipelines/bookstore-ci/shop-api') {
+              withSonarQubeEnv('sonarqube-8.9.10') {
+                sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+                      -Dsonar.java.binaries=build/classes/java/ \
+                      -Dsonar.projectKey=bookstore-shop-api \
+                      -Dsonar.sources=.'''
+              }
             }
           }
         }
-      }
-      stage("Quality Gate for shop-api") {
-        steps {
-          dir('ci-pipelines/bookstore-ci/shop-api') {
-            timeout(time: 60, unit: 'MINUTES') {
-              waitForQualityGate abortPipeline: true
+        stage("Quality Gate for shop-api") {
+          steps {
+            dir('ci-pipelines/bookstore-ci/shop-api') {
+              timeout(time: 60, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+              }
             }
           }
         }
-      }
-      stage('SonarQube Analysis for shop-ui') {
-        steps{
-          dir('ci-pipelines/bookstore-ci/shop-ui') {
-            withSonarQubeEnv('sonarqube-8.9.10') {
-              sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
-                    -Dsonar.java.binaries=build/classes/java/ \
-                    -Dsonar.projectKey=bookstore-shop-ui \
-                    -Dsonar.sources=.'''
+        stage('SonarQube Analysis for shop-ui') {
+          steps{
+            dir('ci-pipelines/bookstore-ci/shop-ui') {
+              withSonarQubeEnv('sonarqube-8.9.10') {
+                sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+                      -Dsonar.java.binaries=build/classes/java/ \
+                      -Dsonar.projectKey=bookstore-shop-ui \
+                      -Dsonar.sources=.'''
+              }
             }
           }
         }
-      }
-      stage("Quality Gate for shop-ui") {
-        steps {
-          dir('ci-pipelines/bookstore-ci/shop-ui') {
-            timeout(time: 60, unit: 'MINUTES') {
-              waitForQualityGate abortPipeline: true
+        stage("Quality Gate for shop-ui") {
+          steps {
+            dir('ci-pipelines/bookstore-ci/shop-ui') {
+              timeout(time: 60, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+              }
             }
           }
         }
-      }
-      stage('SonarQube Analysis for website') {
-        steps{
-          dir('ci-pipelines/bookstore-ci/website') {
-            withSonarQubeEnv('sonarqube-8.9.10') {
-              sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
-                    -Dsonar.java.binaries=build/classes/java/ \
-                    -Dsonar.projectKey=bookstore-website \
-                    -Dsonar.sources=.'''
+        stage('SonarQube Analysis for website') {
+          steps{
+            dir('ci-pipelines/bookstore-ci/website') {
+              withSonarQubeEnv('sonarqube-8.9.10') {
+                sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+                      -Dsonar.java.binaries=build/classes/java/ \
+                      -Dsonar.projectKey=bookstore-website \
+                      -Dsonar.sources=.'''
+              }
             }
           }
         }
-      }
-      stage("Quality Gate for website") {
-        steps {
-          dir('ci-pipelines/bookstore-ci/website') {
-            timeout(time: 60, unit: 'MINUTES') {
-              waitForQualityGate abortPipeline: true
+        stage("Quality Gate for website") {
+          steps {
+            dir('ci-pipelines/bookstore-ci/website') {
+              timeout(time: 60, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+              }
             }
           }
         }
