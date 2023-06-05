@@ -34,40 +34,49 @@ pipeline {
         dir('ci-pipelines/bookstore-ci/shop-api') {
           script {
             shopapi = docker.build("opeomotayo/shop-api")
-            sh "grype opeomotayo/shop-api" 
           }
         }
       }
     }
-    // stage('SonarQube Analysis for shop-api') {
-    //     steps{
-    //       dir('ci-pipelines/bookstore-ci/shop-api') {
-    //       withSonarQubeEnv('sonarqube-8.9.10') {
-    //         sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
-    //               -Dsonar.java.binaries=build/classes/java/ \
-    //               -Dsonar.projectKey=bookstore-shop-api \
-    //               -Dsonar.sources=.'''
-    //       }
-    //     }
-    //   }
-    // }
-    // stage("Quality Gate for shop-api") {
-    //   steps {
-    //     dir('ci-pipelines/bookstore-ci/shop-api') {
-    //       timeout(time: 60, unit: 'MINUTES') {
-    //         waitForQualityGate abortPipeline: true
-    //       }
-    //     }
-    //   }
-    // }
-    // stage('Run Vulnerability Scan') {
-    //   steps {
-    //       dir('ci-pipelines/bookstore-ci/shop-api') {
-    //         sh 'sleep 36000000000'
-    //         sh "grype opeomotayo/shop-api" //--scope AllLayers --fail-on=critical
-    //       }
-    //   }
-    // }
+    stage('SonarQube Analysis for shop-api') {
+        steps{
+          dir('ci-pipelines/bookstore-ci/shop-api') {
+          withSonarQubeEnv('sonarqube-8.9.10') {
+            sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+                  -Dsonar.java.binaries=build/classes/java/ \
+                  -Dsonar.projectKey=bookstore-shop-api \
+                  -Dsonar.sources=.'''
+          }
+        }
+      }
+    }
+    stage("Quality Gate for shop-api") {
+      steps {
+        dir('ci-pipelines/bookstore-ci/shop-api') {
+          timeout(time: 60, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
+          }
+        }
+      }
+    }
+    stage('Publish to Nexus') {
+        steps { 
+            script {  
+                if (currentBuild.result == null || currentBuild.result == 'SUCCESS') {     
+                  docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
+                    shopapi.push("${env.BUILD_NUMBER}")
+                  }
+                }
+            }
+        }
+    }
+    stage('Run Vulnerability Scan') {
+      steps {
+          dir('ci-pipelines/bookstore-ci/shop-api') {
+            sh "grype opeomotayo/shop-api:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
+          }
+      }
+    }
     
     stage('Build shop-ui Image') { 
       steps {
