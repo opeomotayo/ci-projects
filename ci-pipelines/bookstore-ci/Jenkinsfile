@@ -59,7 +59,7 @@ pipeline {
         }
       }
     }
-    stage('Test Image') {
+    stage('SonarQube Analysis') {
       parallel {
         stage('SonarQube Analysis for shop-api') {
           steps{
@@ -69,15 +69,6 @@ pipeline {
                       -Dsonar.java.binaries=build/classes/java/ \
                       -Dsonar.projectKey=bookstore-shop-api \
                       -Dsonar.sources=.'''
-              }
-            }
-          }
-        }
-        stage("Quality Gate for shop-api") {
-          steps {
-            dir('ci-pipelines/bookstore-ci/shop-api') {
-              timeout(time: 60, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
               }
             }
           }
@@ -94,15 +85,6 @@ pipeline {
             }
           }
         }
-        stage("Quality Gate for shop-ui") {
-          steps {
-            dir('ci-pipelines/bookstore-ci/shop-ui') {
-              timeout(time: 60, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          }
-        }
         stage('SonarQube Analysis for website') {
           steps{
             dir('ci-pipelines/bookstore-ci/website') {
@@ -111,6 +93,29 @@ pipeline {
                       -Dsonar.java.binaries=build/classes/java/ \
                       -Dsonar.projectKey=bookstore-website \
                       -Dsonar.sources=.'''
+              }
+            }
+          }
+        }
+      }
+    }
+
+    stage('Quality Gate') {
+      parallel {
+        stage("Quality Gate for shop-api") {
+          steps {
+            dir('ci-pipelines/bookstore-ci/shop-api') {
+              timeout(time: 60, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
+        }
+        stage("Quality Gate for shop-ui") {
+          steps {
+            dir('ci-pipelines/bookstore-ci/shop-ui') {
+              timeout(time: 60, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
               }
             }
           }
@@ -124,6 +129,7 @@ pipeline {
             }
           }
         }
+
       }
     }
 
