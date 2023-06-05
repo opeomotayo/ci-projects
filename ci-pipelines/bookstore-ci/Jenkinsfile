@@ -176,6 +176,11 @@ pipeline {
       parallel {
         stage('Scan ShopAPI') {
           steps {
+            sh """
+              grype db status
+              grype db update
+              docker system prune --all -f
+            """
             sh "grype opeomotayo/shop-api:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
           }
         }
