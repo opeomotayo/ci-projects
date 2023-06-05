@@ -200,11 +200,15 @@ pipeline {
       }
     }
     
-    stage('Trigger Bookstore CD') {
+    stage('Trigger CD Job') {
       steps { 
         script {  
           sh "printenv"
           echo "triggering the pipeline that updates deployment image tag"
+          // paramAValue = "paramAValue"
+          // paramBValue = "paramBValue"
+          //  build job: 'html-blog-cd', wait: false, parameters: [string(name: 'HELLO', value: "${env.BUILD_NUMBER}")]
+          // build job: 'downstream-freestyle', parameters: [[$class: 'StringParameterValue', name: 'ParamA', value: paramAValue], [$class: 'StringParameterValue', name: 'ParamB', value: paramBValue]]
           def job = build job: 'bookstore-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}"]]
         }
       }    
