@@ -17,7 +17,9 @@ pipeline {
   environment {
     SCANNER_HOME = tool 'sonarqube-scanner-4.8.0'
     ORGANIZATION = "opeomotayo"
-    PROJECT_NAME = "bookstore"
+    // COSIGN_PASSWORD=credentials('cosign-password')
+    COSIGN_PRIVATE_KEY=credentials('cosign-private-key')
+    COSIGN_PUBLIC_KEY=credentials('cosign-public-key')
   }
 
   stages {
@@ -33,6 +35,7 @@ pipeline {
         sh "docker system prune --all -f"
       }
     }
+
     stage('Build Image') {
       parallel {
         stage('Build ShopAPI Image') { 
@@ -110,29 +113,23 @@ pipeline {
       parallel {
         stage("Quality Gate for ShopAPI") {
           steps {
-            // dir('ci-pipelines/bookstore-ci/shop-api') {
-              timeout(time: 5, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-              }
-            // }
+            timeout(time: 5, unit: 'MINUTES') {
+              waitForQualityGate abortPipeline: true
+            }
           }
         }
         stage("Quality Gate for ShopUI") {
           steps {
-            // dir('ci-pipelines/bookstore-ci/shop-ui') {
-              timeout(time: 5, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-              }
-            // }
+            timeout(time: 5, unit: 'MINUTES') {
+              waitForQualityGate abortPipeline: true
+            }
           }
         }
         stage("Quality Gate for Website") {
           steps {
-            // dir('ci-pipelines/bookstore-ci/website') {
-              timeout(time: 5, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-              }
-            // }
+            timeout(time: 5, unit: 'MINUTES') {
+              waitForQualityGate abortPipeline: true
+            }
           }
         }
 
@@ -179,38 +176,54 @@ pipeline {
 
     stage('Vulnerability Scan') {
       parallel {
-        stage('Scan ShopAPI') {
+        stage('Scan ShopAPI image') {
           steps {
             sh "grype opeomotayo/shop-api:$BUILD_NUMBER --scope AllLayers" //--fail-on=critical
           }
         }
-        stage('Remove2') { 
+        stage('Scan ShopUI image') {
           steps {
-            sh "docker system prune --all -f"
+            sh "grype opeomotayo/shop-ui:$BUILD_NUMBER --scope AllLayers" //--scope AllLayers --fail-on=critical
           }
         }
-        // stage('Scan ShopUI') {
-        //   steps {
-        //     sh "grype opeomotayo/shop-ui:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
-        //   }
-        // }
-        // stage('Scan Website') {
-        //   steps {
-        //     sh "grype opeomotayo/website:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
-        //   }
-        // }
+        stage('Scan Website image') {
+          steps {
+            sh "grype opeomotayo/website:$BUILD_NUMBER --scope AllLayers" //--fail-on=critical
+          }
+        }
       }
     }
+
+    stage('Sign Container Image') {
+      parallel {
+        stage('Sign ShopAPI Image') {
+          steps {
+            // sh 'echo "$DOCKER_HUB_PSW" | docker login -u $DOCKER_HUB_USR --password-stdin'
+            sh "cosign sign --key $COSIGN_PRIVATE_KEY opeomotayo/shop-api:$BUILD_NUMBER"
+          }
+        }
+        stage('Sign ShopUI Image') {
+          steps {
+            // sh 'echo "$DOCKER_HUB_PSW" | docker login -u $DOCKER_HUB_USR --password-stdin'
+            sh "cosign sign --key $COSIGN_PRIVATE_KEY opeomotayo/shop-ui:$BUILD_NUMBER"
+          }
+        }
+        stage('Sign Website Image') {
+          steps {
+            // sh 'echo "$DOCKER_HUB_PSW" | docker login -u $DOCKER_HUB_USR --password-stdin'
+            sh "cosign sign --key $COSIGN_PRIVATE_KEY opeomotayo/website:$BUILD_NUMBER"
+          }
+        }
+      }
+    }
+
+    
     
     stage('Trigger CD Job') {
       steps { 
         script {  
           sh "printenv"
           echo "triggering the pipeline that updates deployment image tag"
-          // paramAValue = "paramAValue"
-          // paramBValue = "paramBValue"
-          //  build job: 'html-blog-cd', wait: false, parameters: [string(name: 'HELLO', value: "${env.BUILD_NUMBER}")]
-          // build job: 'downstream-freestyle', parameters: [[$class: 'StringParameterValue', name: 'ParamA', value: paramAValue], [$class: 'StringParameterValue', name: 'ParamB', value: paramBValue]]
           def job = build job: 'bookstore-cd', parameters: [[$class: 'StringParameterValue', name: 'DOCKERTAG', value: "${env.BUILD_NUMBER}"]]
         }
       }    
