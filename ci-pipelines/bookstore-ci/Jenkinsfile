@@ -181,23 +181,24 @@ pipeline {
       parallel {
         stage('Scan ShopAPI') {
           steps {
-            // sh """
-            //   grype db status
-            //   grype db update
-            // """
-            sh "grype opeomotayo/shop-api:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
+            sh "grype opeomotayo/shop-api:$BUILD_NUMBER --scope AllLayers" //--fail-on=critical
           }
         }
-        stage('Scan ShopUI') {
+        stage('Remove2') { 
           steps {
-            sh "grype opeomotayo/shop-ui:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
+            sh "docker system prune --all -f"
           }
         }
-        stage('Scan Website') {
-          steps {
-            sh "grype opeomotayo/website:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
-          }
-        }
+        // stage('Scan ShopUI') {
+        //   steps {
+        //     sh "grype opeomotayo/shop-ui:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
+        //   }
+        // }
+        // stage('Scan Website') {
+        //   steps {
+        //     sh "grype opeomotayo/website:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
+        //   }
+        // }
       }
     }
     
