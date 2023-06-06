@@ -36,8 +36,8 @@ spec:
         cpu: 50m
         memory: 25Mi
       limits:
-        cpu: 1500m
-        memory: 2500Mi
+        cpu: 1000m
+        memory: 1000Mi
   volumes:
   - name: dockersock
     hostPath:

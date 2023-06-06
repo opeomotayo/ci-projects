@@ -176,11 +176,11 @@ pipeline {
 
     stage('Vulnerability Scan') {
       parallel {
-        stage('Scan ShopAPI image') {
-          steps {
-            sh "grype opeomotayo/shop-api:$BUILD_NUMBER --scope AllLayers" //--fail-on=critical
-          }
-        }
+        // stage('Scan ShopAPI image') {
+        //   steps {
+        //     sh "grype opeomotayo/shop-api:$BUILD_NUMBER --scope AllLayers" //--fail-on=critical
+        //   }
+        // }
         stage('Scan ShopUI image') {
           steps {
             sh "grype opeomotayo/shop-ui:$BUILD_NUMBER --scope AllLayers" //--scope AllLayers --fail-on=critical
