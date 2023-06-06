@@ -28,6 +28,11 @@ pipeline {
         }
       }
     }
+    stage('Remove Old Images') { 
+      steps {
+        sh "docker system prune --all -f"
+      }
+    }
     stage('Build Image') {
       parallel {
         stage('Build ShopAPI Image') { 
@@ -105,29 +110,29 @@ pipeline {
       parallel {
         stage("Quality Gate for ShopAPI") {
           steps {
-            dir('ci-pipelines/bookstore-ci/shop-api') {
-              timeout(time: 60, unit: 'MINUTES') {
+            // dir('ci-pipelines/bookstore-ci/shop-api') {
+              timeout(time: 5, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
               }
-            }
+            // }
           }
         }
         stage("Quality Gate for ShopUI") {
           steps {
-            dir('ci-pipelines/bookstore-ci/shop-ui') {
-              timeout(time: 60, unit: 'MINUTES') {
+            // dir('ci-pipelines/bookstore-ci/shop-ui') {
+              timeout(time: 5, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
               }
-            }
+            // }
           }
         }
         stage("Quality Gate for Website") {
           steps {
-            dir('ci-pipelines/bookstore-ci/website') {
-              timeout(time: 60, unit: 'MINUTES') {
+            // dir('ci-pipelines/bookstore-ci/website') {
+              timeout(time: 5, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
               }
-            }
+            // }
           }
         }
 
@@ -176,11 +181,10 @@ pipeline {
       parallel {
         stage('Scan ShopAPI') {
           steps {
-            sh """
-              grype db status
-              grype db update
-              docker system prune --all -f
-            """
+            // sh """
+            //   grype db status
+            //   grype db update
+            // """
             sh "grype opeomotayo/shop-api:$BUILD_NUMBER" //--scope AllLayers --fail-on=critical
           }
         }
